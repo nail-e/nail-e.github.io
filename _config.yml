@@ -1,0 +1,83 @@
+# Site settings
+site: The Silence of the RAM
+title: The Silence of the RAM
+keywords: nail.e, blog, Elian Inigo Rieza,
+description: >-
+  nail.e's Hacker Handbook 
+lang: en-US
+timezone:  Asia/Dubai
+repo: # site repo [optional]
+google_verify:      google-site-verification=dhJPd915JAzy4V-4LOY4BfSEe-Ojus9MdkNeayQDmmI # Put your Google Verification here
+google_analytics:   UA-XXXXXXXX-00 # Put your Google Analytics code
+#discus-identifier:  XXX
+
+# Author settings
+author: 
+  name: The Silence of the RAM
+  bio: A blog by Elian Rieza // nail-e <br> High School Hobbyist <br> Least unhinged Linux enjoyer 
+  picture: assets/images/profile.webp 
+  github: nail-e # github username
+  twitter: # twitter username
+  facebook: # facebook username
+  instagram: # instagram username
+  youtube: # youtube username
+  linkedin: elian-r # linkedin username
+  email: e.i_ri3za@tuta.io # email adress
+
+
+# URL settings
+#url: "nail-e.github.io" # Domain Name of host. [username].github.io for github pages
+#permalink: pretty
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+
+exclude:
+  - .jekyll-cache
+  - .obsidian
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE.md
+  - README.md
+  - CONTRIBUTING.md
+
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-relative-links
+paginate: 20
+paginate_path: "/page/:num"
+
+collections:
+  pages:
+    output: true
+    permalink: /:name
+  posts:
+    output: true
+    permalink: /:slug
+  
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "default"
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+relative_links:
+  enabled:     true
+  collections: false
