@@ -1,9 +1,9 @@
 # Site settings
-site: The Silence of the RAM
-title: The Silence of the RAM
-keywords: nail.e, blog, Elian Inigo Rieza,
+site: The Silence of the RAMs
+title: The Silence of the RAMs
+keywords: nail-e, blog, Elian Inigo Rieza,
 description: >-
-  nail.e's Hacker Handbook 
+  A blog by Elian Rieza 
 lang: en-US
 timezone:  Asia/Dubai
 repo: # site repo [optional]
@@ -13,7 +13,7 @@ google_analytics:   UA-XXXXXXXX-00 # Put your Google Analytics code
 
 # Author settings
 author: 
-  name: The Silence of the RAM
+  name: The Silence of the RAMs
   bio: A blog by Elian Rieza // nail-e <br> High School Hobbyist <br> Least unhinged Linux enjoyer 
   picture: assets/images/profile.webp 
   github: nail-e # github username
