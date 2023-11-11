@@ -1,0 +1,178 @@
+I"VZ<h5 id="reading-time-4-minutes">Reading Time: 4 minutes</h5>
+
+<p>Pi has always been 3.14159 to me and to everyone else really, it’s only nerds who’d want to know pi up to its 100th or 1000th digit while its your supernerds who’d be searching for pi up to the millionth digit and well, I’m a supernerd (when I want to).</p>
+
+<p>So I was bored one summers day and way too done with the monotony of math and physics revision and opened up YouTube and the first video that piqued my interest was Stand-Up Math’s legendary video of finding Among Us in Pi. This Einsteinian ingenuity of a video warrants its own place in the annals of history for finding the meaning of life, death and everything in between but also raised a question in my head: how many Amongi are there in pi?</p>
+
+<p>It’s 4.</p>
+
+<p>Anyways, the code consisted of a function converting the first million digits of pi (removing the <code class="language-plaintext highlighter-rouge">3</code>.) into binary then writing the binary output to a text file. Another function read from the file to search for the string “0111110011110101” or “1010111100111110”. This was quite easy but it led me to a much cooler discovery.</p>
+
+<h2 id="chudnovskys-algorithm">Chudnovsky’s Algorithm</h2>
+<p>Chudnovsky’s Algorithm was formulated by the Chudnovsky brothers in 1988 based on Ramanujan’s pi formulae and goddamn is it interesting. I’m no mathematician but I’ll attempt to explain it the best I can.</p>
+
+<p>So, using a generalized hypergeometric function:</p>
+
+\[\begin{equation} _pF_q\left( \begin{array}{c} a_1, a_2, \ldots, a_p \\ b_1, b_2, \ldots, b_q \end{array}; z \right) = \sum_{n=0}^{\infty} \frac{(a_1)_n (a_2)_n \cdots (a_p)_n}{(b_1)_n (b_2)_n \cdots (b_q)_n} \frac{z^n}{n!} \end{equation}\]
+
+<p>The Chudnovsky algorithm uses the 9th Heegner number ($-163$) which is an integer which is divisible by no square number other than 1 and is part of a finite field of imaginary numbers as well as the $j$-function which is a function of a complex variable on the imaginary, positive-only plane (also known as the upper-half plane) of complex numbers to result in:</p>
+
+\[\pi = 426880 \sqrt{10005} \sum_{k=0}^{\infty} \frac{(6k)!(545140134k + 13591409)}{(3k)!(k!)^3(-262537412640768000)^k}\]
+
+<p>This is the Chudnovsky’s algorithm which probably works on a graphing calculator or on pen and paper but it needs some work to be applied on Rust. More on this later.</p>
+
+<h2 id="my-attempt">My Attempt</h2>
+<p>I’ve recently become enticed with Rust and its intricacies, almost unhealthily as well. It’s speed and simplicity paired with how readable it is. It’s like if you took C’s control, power and processing and took Python’s syntax and readability and created a love child.</p>
+
+<p>Again, I’m no mathematician, so translating mathematical equations into code was a bit daunting. However, Rust’s made the process more manageable. In crafting this implementation, I began by initializing variables to accommodate the dynamic nature of Chudnovsky’s algorithm. Using <code class="language-plaintext highlighter-rouge">Float</code> type from <code class="language-plaintext highlighter-rouge">rug</code> - a library for large numbers operations - helps with precise calculations for longer numbers.</p>
+
+<figure class="highlight"><pre><code class="language-rust" data-lang="rust"><span class="c">// From lib.rs. File available on GitHub</span>
+
+<span class="nd">#![warn(clippy::all,</span> <span class="nd">clippy::pedantic,</span> <span class="nd">missing_docs)]</span>
+
+<span class="k">use</span> <span class="nn">rug</span><span class="p">::{</span><span class="nn">ops</span><span class="p">::</span><span class="n">Pow</span><span class="p">,</span> <span class="n">Float</span><span class="p">};</span>
+
+<span class="nd">#[must_use]</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">pi</span><span class="p">(</span><span class="n">prec</span><span class="p">:</span> <span class="nb">u32</span><span class="p">,</span> <span class="n">its</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Float</span> <span class="p">{</span>
+    <span class="c">// Define the constants</span>
+    <span class="k">const</span> <span class="n">A</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="mi">42_68_80</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">B</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="mi">10_005</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">K</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">K_S</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">L</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="mi">13_59_14_09</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">L_S</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="mi">545_140_134</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">M</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">X</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">X_S</span><span class="p">:</span> <span class="nb">i64</span> <span class="o">=</span> <span class="o">-</span><span class="mi">262_537_412_640_768_000</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">S</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="c">// Initialize the values</span>
+    <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="nn">Float</span><span class="p">::</span><span class="nf">with_val</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="n">A</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="nn">Float</span><span class="p">::</span><span class="nf">with_val</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span><span class="nf">.sqrt</span><span class="p">();</span>
+    <span class="k">let</span> <span class="n">c</span> <span class="o">=</span> <span class="nn">Float</span><span class="p">::</span><span class="nf">with_val</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">a</span> <span class="o">*</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">);</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">k</span> <span class="o">=</span> <span class="nn">Float</span><span class="p">::</span><span class="nf">with_val</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="n">K</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">k_s</span> <span class="o">=</span> <span class="nn">Float</span><span class="p">::</span><span class="nf">with_val</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="n">K_S</span><span class="p">);</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">l</span> <span class="o">=</span> <span class="nn">Float</span><span class="p">::</span><span class="nf">with_val</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="n">L</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">l_s</span> <span class="o">=</span> <span class="nn">Float</span><span class="p">::</span><span class="nf">with_val</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="n">L_S</span><span class="p">);</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">m</span> <span class="o">=</span> <span class="nn">Float</span><span class="p">::</span><span class="nf">with_val</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="n">M</span><span class="p">);</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">x</span> <span class="o">=</span> <span class="nn">Float</span><span class="p">::</span><span class="nf">with_val</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="n">X</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">x_s</span> <span class="o">=</span> <span class="nn">Float</span><span class="p">::</span><span class="nf">with_val</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="n">X_S</span><span class="p">);</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">Float</span><span class="p">::</span><span class="nf">with_val</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="n">S</span><span class="p">);</span>
+
+    <span class="c">// Iterate</span>
+    <span class="k">for</span> <span class="n">q</span> <span class="n">in</span> <span class="mi">0</span><span class="o">..</span><span class="n">its</span> <span class="p">{</span>
+        <span class="c">// S = S + M_q * L_q / X_q</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="nn">Float</span><span class="p">::</span><span class="nf">with_val</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">m</span> <span class="o">*</span> <span class="o">&amp;</span><span class="n">l</span><span class="p">)</span> <span class="o">/</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">;</span>
+
+        <span class="c">// M_q = M_q * (K_q^3 - 16 * K_q) / (q + 1)^3</span>
+        <span class="n">m</span> <span class="o">*=</span> <span class="p">(</span><span class="n">k</span><span class="nf">.clone</span><span class="p">()</span><span class="nf">.pow</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mi">16</span> <span class="o">*</span> <span class="n">k</span><span class="nf">.clone</span><span class="p">())</span> <span class="o">/</span> <span class="nn">Float</span><span class="p">::</span><span class="nf">with_val</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="p">(</span><span class="n">q</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="nf">.pow</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span>
+
+        <span class="c">// Update K_q, L_q, and X_q</span>
+        <span class="n">k</span> <span class="o">+=</span> <span class="o">&amp;</span><span class="n">k_s</span><span class="p">;</span>
+        <span class="n">l</span> <span class="o">+=</span> <span class="o">&amp;</span><span class="n">l_s</span><span class="p">;</span>
+        <span class="n">x</span> <span class="o">*=</span> <span class="o">&amp;</span><span class="n">x_s</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c">// C * (1 / S)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nn">Float</span><span class="p">::</span><span class="nf">with_val</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span>
+
+    <span class="c">// Pi</span>
+    <span class="nn">Float</span><span class="p">::</span><span class="nf">with_val</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">c</span><span class="p">)</span> <span class="o">*</span> <span class="o">&amp;</span><span class="n">s</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Chudnovsky’s algorithm constantly interates, each progressively searching the approximation of pi and two fundamental things that Rust achieved was accuracy and speed. Rust’s <code class="language-plaintext highlighter-rouge">Float</code> ensures that every operation maintains point-bit precision up to 64 bits.</p>
+
+<figure class="highlight"><pre><code class="language-rust" data-lang="rust"><span class="c">// From main.rs. File available on GitHub</span>
+
+<span class="k">mod</span> <span class="n">lib</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nn">lib</span><span class="p">::</span><span class="n">pi</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">env</span><span class="p">;</span>
+
+<span class="c">// Edit this for precision</span>
+<span class="k">const</span> <span class="n">PRECISION</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="mi">1000000</span><span class="p">;</span>
+
+<span class="c">// Default number of iterations</span>
+<span class="k">const</span> <span class="n">ITERATIONS</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c">// Command line arguments</span>
+    <span class="k">let</span> <span class="n">args</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="mi">_</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">env</span><span class="p">::</span><span class="nf">args</span><span class="p">()</span><span class="nf">.collect</span><span class="p">();</span>
+
+    <span class="c">// Make decisions based on the number of arguments</span>
+    <span class="k">match</span> <span class="n">args</span><span class="nf">.len</span><span class="p">()</span> <span class="p">{</span>
+        <span class="mi">1</span> <span class="k">=&gt;</span> <span class="p">{</span>
+            <span class="nd">println!</span><span class="p">(</span><span class="s">"Approximation: {:?}"</span><span class="p">,</span> <span class="nf">pi</span><span class="p">(</span><span class="n">PRECISION</span><span class="p">,</span> <span class="n">ITERATIONS</span><span class="p">));</span>
+            <span class="nd">println!</span><span class="p">(</span><span class="s">"Precision:     {:?}"</span><span class="p">,</span> <span class="n">PRECISION</span><span class="p">);</span>
+            <span class="nd">println!</span><span class="p">(</span><span class="s">"Iterations:    {:?}"</span><span class="p">,</span> <span class="n">ITERATIONS</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="mi">2</span> <span class="k">=&gt;</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="n">precision</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="py">.parse</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">u32</span><span class="o">&gt;</span><span class="p">()</span>
+                <span class="nf">.expect</span><span class="p">(</span><span class="s">"Precision must be a positive integer!"</span><span class="p">);</span>
+            <span class="k">if</span> <span class="n">precision</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="p">{</span>
+                <span class="nd">panic!</span><span class="p">(</span><span class="s">"Precision must be a positive integer!"</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nd">println!</span><span class="p">(</span><span class="s">"Approximation: {:?}"</span><span class="p">,</span> <span class="nf">pi</span><span class="p">(</span><span class="n">precision</span> <span class="k">as</span> <span class="nb">u32</span><span class="p">,</span> <span class="n">ITERATIONS</span><span class="p">));</span>
+                <span class="nd">println!</span><span class="p">(</span><span class="s">"Precision:  {:?}"</span><span class="p">,</span> <span class="n">precision</span><span class="p">);</span>
+                <span class="nd">println!</span><span class="p">(</span><span class="s">"Iterations: {:?}"</span><span class="p">,</span> <span class="n">ITERATIONS</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="mi">3</span> <span class="k">=&gt;</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="n">precision</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="py">.parse</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">u32</span><span class="o">&gt;</span><span class="p">()</span>
+                <span class="nf">.expect</span><span class="p">(</span><span class="s">"Precision must be a positive integer!"</span><span class="p">);</span>
+            <span class="k">let</span> <span class="n">iterations</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="py">.parse</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">u32</span><span class="o">&gt;</span><span class="p">()</span>
+                <span class="nf">.expect</span><span class="p">(</span><span class="s">"Number of iterations must be a positive integer!"</span><span class="p">);</span>
+            <span class="k">if</span> <span class="n">precision</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="p">{</span>
+                <span class="nd">panic!</span><span class="p">(</span><span class="s">"Precision must be a positive integer!"</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">iterations</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="p">{</span>
+                <span class="nd">panic!</span><span class="p">(</span><span class="s">"Number of iterations must be a positive integer!"</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nd">println!</span><span class="p">(</span>
+                    <span class="s">"Approximation: {:?}"</span><span class="p">,</span>
+                    <span class="nf">pi</span><span class="p">(</span><span class="n">precision</span> <span class="k">as</span> <span class="nb">u32</span><span class="p">,</span> <span class="n">iterations</span> <span class="k">as</span> <span class="nb">u32</span><span class="p">)</span>
+                <span class="p">);</span>
+                <span class="nd">println!</span><span class="p">(</span><span class="s">"Precision:  {:?}"</span><span class="p">,</span> <span class="n">precision</span><span class="p">);</span>
+                <span class="nd">println!</span><span class="p">(</span><span class="s">"Iterations: {:?}"</span><span class="p">,</span> <span class="n">iterations</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="mi">_</span> <span class="k">=&gt;</span> <span class="nd">panic!</span><span class="p">(</span><span class="s">"Redundant argument."</span><span class="p">),</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>To enhance utility, this thing runs on CLI using <code class="language-plaintext highlighter-rouge">env</code>, allowing to specify the desired precision and number of iterations as straightforward command line arguments. Moreover, basic error handling exists, ensuring that a user can’t shoot themselves in the foot.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>nail_@nailCPU src]<span class="nv">$ </span>cargo run 1000 1
+warning: found module declaration <span class="k">for </span>lib.rs
+  <span class="nt">--</span><span class="o">&gt;</span> src/main.rs:14:1
+   |
+14 | mod lib<span class="p">;</span>
+   | ^^^^^^^^
+   |
+   <span class="o">=</span> note: lib.rs is the root of this crate<span class="s1">'s library target
+   = help: to refer to it from other targets, use the library'</span>s name as the path
+   <span class="o">=</span> note: <span class="sb">`</span><span class="c">#[warn(special_module_name)]` on by default</span>
+
+warning: <span class="sb">`</span>chudnovskys-amongii<span class="sb">`</span> <span class="o">(</span>bin <span class="s2">"chudnovskys-amongii"</span><span class="o">)</span> generated 1 warning
+    Finished dev <span class="o">[</span>unoptimized + debuginfo] target<span class="o">(</span>s<span class="o">)</span> <span class="k">in </span>0.16s
+     Running <span class="sb">`</span>/home/nail_/Documents/Programming/chudnovskys-amongii/target/debug/chudnovskys-amongii 1000 1<span class="sb">`</span>
+Approximation: 3.1415926535897342076684535915782983407622332609157065908941454987376662094016591080661173
+47469689757798160379655566278035801345995935132861731766159828062231080441973785312530565152115747085933831
+77441545774415459602274587627712846591418133739922859535784112988088378242126794689633529216676947336619680
+7151594471515944
+Precision:  1000
+Iterations: 1</code></pre></figure>
+
+<p>It’s not perfect sure, but it sure does work. This small project really helped me wrap my head around Rust and Math (even though Math is a fluke in school) so go ahead and give it a try!</p>
+
+<h2 id="links">Links</h2>
+<ul>
+  <li><strong><a href="https://github.com/nail-e/chudnovskys-amongii">Github Page</a></strong></li>
+  <li><strong><a href="https://docs.rs/rug/latest/rug/">Rug Library</a></strong></li>
+  <li><strong><a href="https://www.youtube.com/watch?v=dET2l8l3upU">Stand-Up Math’s Video</a></strong></li>
+</ul>
+
+:ET

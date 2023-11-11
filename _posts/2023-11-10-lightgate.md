@@ -7,6 +7,8 @@ permalink: /creating-an-arduino-powered-lightgate/
 categories: Hardware
 tags: [arduino, physics, hardware]
 ---
+##### Reading Time: 5 minutes
+
 A high-school project never really warrants any extra brainpower required, especially if it's ungraded and for competition but the time constraints and team pressure makes an absolutely great learning experience. Last month, my IB school decided to run a Group 4 project day(s) and well, other than the redundancy of an optional, 6-hour project stretched out to two days, the Arduino project went well for our group.
 
 The prompt for the project was to create systems for a city on Mars and our group came up with a transportation system that would speed through Martian planes in a hyperloop-esque system. As the "Computer Scientist" and "Physicist" of the group, I was tasked with creating a monitoring system for the hyperloop speeds and thus came the idea of creating a lightgate.

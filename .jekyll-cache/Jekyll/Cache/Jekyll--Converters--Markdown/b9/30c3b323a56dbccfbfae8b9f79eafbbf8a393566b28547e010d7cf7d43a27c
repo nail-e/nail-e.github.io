@@ -1,0 +1,205 @@
+I"m<p>My high school recently installed (and uninstalled) a new RFID security system for all the doors of classrooms and the auxiliary doors of the school buildings and cafeteria. While not only being really inconvenient as I have to wait until 7:45 in the morning for security to disable the auxiliary doors so I can go in, only teachers can come in or out of the buildings if the doors are fully locked because you’d need a teacher’s ID card on the RFID reader to open the doors. Us students have ID cards but it’s only used for identification rather than unlocking doors and what not so I got an idea: what if I <strong>legally</strong> found a way to open a school door without waiting for a teacher to let me in.</p>
+
+<p>Unfortunately for me, the week that school admin setup the security system, they removed the whole system as it was becoming a hassle for faculty and students alike but my idea still persisted. I got to work and decided to practice <strong>legally</strong> cloning my apartment access card which also <strong>accidentally</strong> happened to lead me to <strong>legally</strong> clone a teacher’s ID card.</p>
+
+<p><img src="/assets/images/rfid-post/rc522.webp" alt="A photo of an MFRC522 RFID Module for ESP8266" title="MFRC522" style="width:500px; height:300px; margin-left:20px; float: right;" />
+<img src="/assets/images/rfid-post/esp8266.webp" alt="A photo of an ESP8266 NodeMCU V3.0 Lolin " title="ESP8266" style="width:500px; height:300px; margin-left:20px; float: right;" /></p>
+
+<p>Anyways, to do that, I ordered a MFRC522 module (the blue module on the right) from Amazon which is a 13.56MHz ISO/IEC 14443 MIFARE RFID Reading/Writing module with came bundled with a singular RFID card and RFID tag. Admittedly, the MFRC522 module I bought was quite cheap and I had a few doubts on its reliability but dodgy Chinese electronics products from Amazon work 95% of the time anyways so it really wasn’t a huge concern.</p>
+
+<p>I was split on either using an Arduino Uno or ESP8266 (the black module on the right) but decided on using an ESP-8266 in the end. The ESP-8266 is one of the best microchips out there and, in my opinion, outshine its superior ESP-32, Arduino Nano and maybe even the Raspberry Pi Pico. It’s cheap, its powerful and definitely the best pocket-sized option out there.</p>
+
+<p>I had a three-pack of really low-end NodeMCU ESP8266 v3.0 from Lolin which I bought for another project and had one leftover which I used. I highly recommend you to use something slightly on the higher end on the ESP8266 such as HiLetGo but the Lolin ones work perfectly.</p>
+
+<h2 id="looking-for-the-best-electronic-modules">Looking for the best electronic modules</h2>
+<p>Going on a tangent here but spending a few bucks could save you from a headache fixing a DOA electronic or trying to download weird drivers that are so niche that you’d need to go on page 13 of Google trying to find it. Either way, the best way to do things is to buy a slightly-more-expensive-than-the-cheapest-option on Amazon or eBay. Make sure to read the reviews too: a straight 5-star electronic with AI-generated reviews is more likely to be worse and way less trustworthy than a 3.9-star review with genuine human text with complaints, praises and photos.</p>
+<h2 id="soldering-the-mfrc522">Soldering the MFRC522</h2>
+<p>The MFRC522 I bought was unsoldered and I didn’t have a solder handy so I borrowed a friend’s cheap solder. This was the 5% of the time where electronics from China don’t work well and i’d spend slightly a bit more just to get a slightly more expensive but high-quality solder. I’m not the best solder so here’s a video of someone soldering their MFRC522.</p>
+
+<p>[https://www.youtube.com/watch?v=wv5Mp1mn_8M]</p>
+
+<h2 id="wiring-and-code">Wiring and Code</h2>
+<p>Wiring the RC522 with the ESP8266 was dodgy and took me around 3 days to get right. One big issue was the Lolin ESP8266 apparently only being able to run on <code class="language-plaintext highlighter-rouge">9600 baud</code> while the RC522 runs exclusively on <code class="language-plaintext highlighter-rouge">115200 baud</code>. I’m certain that the Lolin ESP8266 just have a printing error because it works on both <code class="language-plaintext highlighter-rouge">115200</code> and <code class="language-plaintext highlighter-rouge">9600 baud</code> outputs. Just note that the console needs to run on <code class="language-plaintext highlighter-rouge">115200 baud</code> to see any outputs.</p>
+
+<p><img src="/assets/images/rfid-post/ESP8266-Hookup.webp" alt="ESP8266 and RC522 Pinout" /></p>
+
+<p>Wiring the RC522 is straightforward. The code below (and on my GitHub) follows the wiring above. A higher resolution image can be seen in the GitHub page of this project. But before we can run, we need to walk and before we can clone cards, we need to read cards.</p>
+
+<p>This code comes from the MFRC522 library by Miguel Balboa. I know. Skiddie.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;SPI.h&gt;
+#include &lt;MFRC522.h&gt;
+</span>
+<span class="n">constexpr</span> <span class="kt">uint8_t</span> <span class="n">RST_PIN</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>     
+<span class="n">constexpr</span> <span class="kt">uint8_t</span> <span class="n">SS_PIN</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>     
+ 
+<span class="n">MFRC522</span> <span class="nf">rfid</span><span class="p">(</span><span class="n">SS_PIN</span><span class="p">,</span> <span class="n">RST_PIN</span><span class="p">);</span> <span class="c1">// Instance of the class</span>
+
+<span class="n">MFRC522</span><span class="o">::</span><span class="n">MIFARE_Key</span> <span class="n">key</span><span class="p">;</span> 
+
+<span class="c1">// Init array that will store new NUID </span>
+<span class="n">byte</span> <span class="n">nuidPICC</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span> 
+  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
+  <span class="n">SPI</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="c1">// Init SPI bus</span>
+  <span class="n">rfid</span><span class="p">.</span><span class="n">PCD_Init</span><span class="p">();</span> <span class="c1">// Init MFRC522 </span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="n">byte</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">key</span><span class="p">.</span><span class="n">keyByte</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0xFF</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">"This code scan the MIFARE Classsic NUID."</span><span class="p">));</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">"Using the following key:"</span><span class="p">));</span>
+  <span class="n">printHex</span><span class="p">(</span><span class="n">key</span><span class="p">.</span><span class="n">keyByte</span><span class="p">,</span> <span class="n">MFRC522</span><span class="o">::</span><span class="n">MF_KEY_SIZE</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+
+  <span class="c1">// Look for new cards</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="n">rfid</span><span class="p">.</span><span class="n">PICC_IsNewCardPresent</span><span class="p">())</span>
+    <span class="k">return</span><span class="p">;</span>
+
+  <span class="c1">// Verify if the NUID has been readed</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="n">rfid</span><span class="p">.</span><span class="n">PICC_ReadCardSerial</span><span class="p">())</span>
+    <span class="k">return</span><span class="p">;</span>
+
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">"PICC type: "</span><span class="p">));</span>
+  <span class="n">MFRC522</span><span class="o">::</span><span class="n">PICC_Type</span> <span class="n">piccType</span> <span class="o">=</span> <span class="n">rfid</span><span class="p">.</span><span class="n">PICC_GetType</span><span class="p">(</span><span class="n">rfid</span><span class="p">.</span><span class="n">uid</span><span class="p">.</span><span class="n">sak</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">rfid</span><span class="p">.</span><span class="n">PICC_GetTypeName</span><span class="p">(</span><span class="n">piccType</span><span class="p">));</span>
+
+  <span class="c1">// Check is the PICC of Classic MIFARE type</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">piccType</span> <span class="o">!=</span> <span class="n">MFRC522</span><span class="o">::</span><span class="n">PICC_TYPE_MIFARE_MINI</span> <span class="o">&amp;&amp;</span>  
+    <span class="n">piccType</span> <span class="o">!=</span> <span class="n">MFRC522</span><span class="o">::</span><span class="n">PICC_TYPE_MIFARE_1K</span> <span class="o">&amp;&amp;</span>
+    <span class="n">piccType</span> <span class="o">!=</span> <span class="n">MFRC522</span><span class="o">::</span><span class="n">PICC_TYPE_MIFARE_4K</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">"Your tag is not of type MIFARE Classic."</span><span class="p">));</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">rfid</span><span class="p">.</span><span class="n">uid</span><span class="p">.</span><span class="n">uidByte</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">nuidPICC</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">||</span> 
+    <span class="n">rfid</span><span class="p">.</span><span class="n">uid</span><span class="p">.</span><span class="n">uidByte</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">nuidPICC</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">||</span> 
+    <span class="n">rfid</span><span class="p">.</span><span class="n">uid</span><span class="p">.</span><span class="n">uidByte</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="n">nuidPICC</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">||</span> 
+    <span class="n">rfid</span><span class="p">.</span><span class="n">uid</span><span class="p">.</span><span class="n">uidByte</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">!=</span> <span class="n">nuidPICC</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">"A new card has been detected."</span><span class="p">));</span>
+    <span class="n">rfid</span><span class="p">.</span><span class="n">PICC_DumpToSerial</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">rfid</span><span class="p">.</span><span class="n">uid</span><span class="p">));</span>
+
+    <span class="c1">// Store NUID into nuidPICC array</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">byte</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">nuidPICC</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rfid</span><span class="p">.</span><span class="n">uid</span><span class="p">.</span><span class="n">uidByte</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+   
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">"The NUID tag is:"</span><span class="p">));</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">"In hex: "</span><span class="p">));</span>
+    <span class="n">printHex</span><span class="p">(</span><span class="n">rfid</span><span class="p">.</span><span class="n">uid</span><span class="p">.</span><span class="n">uidByte</span><span class="p">,</span> <span class="n">rfid</span><span class="p">.</span><span class="n">uid</span><span class="p">.</span><span class="n">size</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">"In dec: "</span><span class="p">));</span>
+    <span class="n">printDec</span><span class="p">(</span><span class="n">rfid</span><span class="p">.</span><span class="n">uid</span><span class="p">.</span><span class="n">uidByte</span><span class="p">,</span> <span class="n">rfid</span><span class="p">.</span><span class="n">uid</span><span class="p">.</span><span class="n">size</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">"Card read previously."</span><span class="p">));</span>
+
+  <span class="c1">// Halt PICC</span>
+  <span class="n">rfid</span><span class="p">.</span><span class="n">PICC_HaltA</span><span class="p">();</span>
+
+  <span class="c1">// Stop encryption on PCD</span>
+  <span class="n">rfid</span><span class="p">.</span><span class="n">PCD_StopCrypto1</span><span class="p">();</span>
+<span class="p">}</span>
+
+
+<span class="c1">// Dumps hex values. </span>
+<span class="kt">void</span> <span class="nf">printHex</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span> <span class="n">byte</span> <span class="n">bufferSize</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">byte</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">bufferSize</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mh">0x10</span> <span class="o">?</span> <span class="s">" 0"</span> <span class="o">:</span> <span class="s">" "</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">buffer</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">HEX</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="c1">// Dumps decimal values.</span>
+<span class="kt">void</span> <span class="nf">printDec</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span> <span class="n">byte</span> <span class="n">bufferSize</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">byte</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">bufferSize</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mh">0x10</span> <span class="o">?</span> <span class="s">" 0"</span> <span class="o">:</span> <span class="s">" "</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">buffer</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">DEC</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We can read UIDs now! But now we need to clone the cards. The code below is able to clone code based on a user-input UID</p>
+
+<p>This code is based on <code class="language-plaintext highlighter-rouge">ChangeUID.c</code> in Miguel Balboa’s library but was written by me.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;SPI.h&gt;
+#include &lt;MFRC522.h&gt;
+#define NEW_UID {0xE7, 0xB6, 0xB8, 0x8D} // Code to change
+</span><span class="n">constexpr</span> <span class="kt">uint8_t</span> <span class="n">RST_PIN</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="n">constexpr</span> <span class="kt">uint8_t</span> <span class="n">SS_PIN</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="n">MFRC522</span> <span class="nf">mfrc522</span><span class="p">(</span><span class="n">SS_PIN</span><span class="p">,</span> <span class="n">RST_PIN</span><span class="p">);</span> <span class="c1">// Instance of the class</span>
+
+<span class="n">MFRC522</span><span class="o">::</span><span class="n">MIFARE_Key</span> <span class="n">key</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span> 
+	<span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">Serial</span><span class="p">);</span> 
+	<span class="n">SPI</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="c1">// Init SPI bus</span>
+	<span class="n">mfrc522</span><span class="p">.</span><span class="n">PCD_Init</span><span class="p">();</span> <span class="c1">// Init MFRC522 card</span>
+
+<span class="c1">// Sets all hex bit values to FFFF...</span>
+	<span class="k">for</span> <span class="p">(</span><span class="n">byte</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">key</span><span class="p">.</span><span class="n">keyByte</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0xFF</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="n">mfrc522</span><span class="p">.</span><span class="n">PICC_IsNewCardPresent</span><span class="p">()</span> <span class="o">||</span> <span class="o">!</span> <span class="n">mfrc522</span><span class="p">.</span><span class="n">PICC_ReadCardSerial</span><span class="p">()</span> <span class="p">)</span> <span class="p">{</span>
+		<span class="n">delay</span><span class="p">(</span><span class="mi">50</span><span class="p">);</span>
+		<span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+
+	<span class="c1">// Prints Current UID</span>
+	<span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">"Card UID:"</span><span class="p">));</span>
+	<span class="k">for</span> <span class="p">(</span><span class="n">byte</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">mfrc522</span><span class="p">.</span><span class="n">uid</span><span class="p">.</span><span class="n">size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">mfrc522</span><span class="p">.</span><span class="n">uid</span><span class="p">.</span><span class="n">uidByte</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mh">0x10</span> <span class="o">?</span> <span class="s">" 0"</span> <span class="o">:</span> <span class="s">" "</span><span class="p">);</span>
+		<span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">mfrc522</span><span class="p">.</span><span class="n">uid</span><span class="p">.</span><span class="n">uidByte</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">HEX</span><span class="p">);</span>
+	<span class="p">}</span>
+	
+	<span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+	<span class="n">byte</span> <span class="n">newUid</span><span class="p">[]</span> <span class="o">=</span> <span class="n">NEW_UID</span><span class="p">;</span>
+
+<span class="k">if</span> <span class="p">(</span> <span class="n">mfrc522</span><span class="p">.</span><span class="n">MIFARE_SetUid</span><span class="p">(</span><span class="n">newUid</span><span class="p">,</span> <span class="p">(</span><span class="n">byte</span><span class="p">)</span><span class="mi">4</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+	<span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">"Wrote new UID to card."</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="c1">// Halt PICC and re-select it so DumpToSerial doesn't get confused</span>
+<span class="n">mfrc522</span><span class="p">.</span><span class="n">PICC_HaltA</span><span class="p">();</span>
+
+<span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="n">mfrc522</span><span class="p">.</span><span class="n">PICC_IsNewCardPresent</span><span class="p">()</span> <span class="o">||</span> <span class="o">!</span> <span class="n">mfrc522</span><span class="p">.</span><span class="n">PICC_ReadCardSerial</span><span class="p">()</span> <span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Dump the new memory contents</span>
+<span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">"New UID and contents:"</span><span class="p">));</span>
+<span class="n">mfrc522</span><span class="p">.</span><span class="n">PICC_DumpToSerial</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">mfrc522</span><span class="p">.</span><span class="n">uid</span><span class="p">));</span>
+<span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h2 id="result">Result!</h2>
+<p>Unfortunately, the RFID card and tag that came with the MFRC522 were only readable despite the fact they were clearly advertised as being read-write. That was a small roadblock as I had to order another 5-pack of true read-writeable RFID tags. Make sure to buy the 13.56MHz tags as well! They’re cheap on Amazon (but way more expensive than a Lolin ESP8266).</p>
+
+<p>But all in all, reading, cloning and writing the card worked! I made this small video showcasing how it all worked.</p>
+
+<p>[VIDEO OF RFID CARD]</p>
+<h2 id="future-stuff">Future Stuff</h2>
+<p>One big thing I really want to add is the ability to write the card UID into the ESP8266 to be read from by a phone connected to the ESP8266 through its wifi capabilities. This makes the process of <strong>legally</strong> scanning cards way more intuitive and hacker-y.</p>
+
+<p>This was a really fun side project that spiraled into something more than being a harmful script kid attacking their school’s security system. I must stress that cloning cards that aren’t yours could possibly be illegal in other countries and I don’t condone anyone trying to break into buildings or clone ID cards unless the ID card is legally yours.</p>
+
+<p><img src="/assets/images/rfid-post/circuitfinal.webp" alt="ESP8266 and RC522" /></p>
+
+<p>Have fun :)</p>
+<h2 id="links">Links</h2>
+<ul>
+  <li><strong><a href="github.com/nail-e/rfid-project">GitHub Page</a></strong></li>
+  <li><strong><a href="https://github.com/miguelbalboa/rfid">Miguel Balboa’s RFID Library</a></strong></li>
+  <li><strong><a href="">A good MFRC522 on Amazon</a></strong></li>
+</ul>
+:ET
