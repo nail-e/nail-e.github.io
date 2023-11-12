@@ -17,7 +17,7 @@
   --border-color: #928374;
 }
 
-body{
+body {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
   background: var(--body-bg);
@@ -95,6 +95,7 @@ figcaption {
 }
 
 .footer{
+  font-family: "Open Sans";
   display: flex; 
   flex-direction: row; 
   flex-wrap: wrap; 

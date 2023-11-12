@@ -5,15 +5,15 @@
 		<div class="profile-about">
 			<h1 style="margin-bottom: 0; font-weight: 700;">{{site.author.name}}</h2>
 			{% if site.author.youtube %}
-				<a href="{{site.author.youtube}}" target="_blank"><img src="assets/images/icon/youtube.svg" class="social-icon"></a>
+				<a href="https://youtube.com/@{{site.author.youtube}}" target="_blank"><img src="assets/images/icon/youtube.svg" class="social-icon" alt="YouTube Icon"></a>
 			{% endif %}
 			{% if site.author.github %}
-				<a href="https://github.com/{{site.author.github}}" target="_blank"><img src="assets/images/icon/github.svg" class="social-icon"></a>
+				<a href="https://github.com/{{site.author.github}}" target="_blank"><img src="assets/images/icon/github.svg" class="social-icon" alt="GitHub Icon"></a>
 			{% endif %}
 			{% if site.author.linkedin %}
-				<a href="https://linkedin.com/in/{{site.author.linkedin}}" target="_blank"><img src="assets/images/icon/linkedin.svg" class="social-icon"></a>
+				<a href="https://linkedin.com/in/{{site.author.linkedin}}" target="_blank"><img src="assets/images/icon/linkedin.svg" class="social-icon" alt="LinkedIn Icon"></a>
 			{% endif %}
-			<a href="about"><img src="assets/images/icon/me.svg" class="social-icon"></a>
+			<a href="about"><img src="assets/images/icon/me.svg" class="social-icon" alt="About Me Icon"></a>
 			<br>
 			{{ site.author.bio }}
 			<br>
@@ -23,5 +23,8 @@
 		</div>
 	</div>
 	{{ content }}
+	<div class="footer">
+    <p><span>The Silence of the RAMs - Elian Rieza, 2023. Thanks for visiting!</span></p>
+	</div>
 </div>
 {% include footer.html %}

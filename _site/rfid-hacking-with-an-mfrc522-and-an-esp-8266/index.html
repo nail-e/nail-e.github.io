@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>RFID Hacking with an MFRC522 and an ESP-8266 - The Silence of the RAMs</title>
-		<meta name="description" content="A blog by Elian Rieza ">
+		<meta name="description" content=""The Silence of the RAMs: Elian Rieza's blog about coding, electronics, Linux, technology and everything in between."">
 		<meta name="keywords" content="esp8266hardwarehackingcybersecurity">
 		<base href="http://localhost:4000" />
 		
@@ -16,12 +16,13 @@
 		<meta property="og:type" content="article" />
 		<meta property="og:url" content="http://localhost:4000/rfid-hacking-with-an-mfrc522-and-an-esp-8266/"/>
 		<meta property="og:title" content="RFID Hacking with an MFRC522 and an ESP-8266 - The Silence of the RAMs" />
-		<meta property="og:description" content="A blog by Elian Rieza " />
+		<meta property="og:description" content=""The Silence of the RAMs: Elian Rieza's blog about coding, electronics, Linux, technology and everything in between."" />
 		<meta property="og:image" content="http://localhost:4000/assets/images/favicon.png"/>
 		<meta name="twitter:card" content="summary"/>
 		<meta property="twitter:title" content="RFID Hacking with an MFRC522 and an ESP-8266 - The Silence of the RAMs" />
-		<meta property="twitter:description" content="A blog by Elian Rieza " />
+		<meta property="twitter:description" content=""The Silence of the RAMs: Elian Rieza's blog about coding, electronics, Linux, technology and everything in between."" />
 		<meta property="twitter:image" content="http://localhost:4000/assets/images/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000assets/images/apple-touch-icon.png">
 		<link rel="stylesheet" href="assets/css/highlight.css">
 		<link rel="stylesheet" href="assets/css/style.css">
 		<link rel="shortcut icon" href="assets/images/favicon.png" />
@@ -34,17 +35,19 @@
 
 <div class="container">
 	<div class="profile">
-		<a href="http://localhost:4000"><img src="assets/images/profile.webp" class="profile-image"></a>
+		<a href="http://localhost:4000"><img src="assets/images/ElianRieza.webp" class="profile-image" alt="Elian Rieza"></a>
 		<div class="profile-about">
 			<h1 style="margin-bottom: 0; font-weight: 700;">The Silence of the RAMs</h2>
 			
+				<a href="https://youtube.com/@nail-e" target="_blank"><img src="assets/images/icon/youtube.svg" class="social-icon" alt="YouTube Icon"></a>
 			
-				<a href="https://github.com/nail-e" target="_blank"><img src="assets/images/icon/github.svg" class="social-icon"></a>
+			
+				<a href="https://github.com/nail-e" target="_blank"><img src="assets/images/icon/github.svg" class="social-icon" alt="GitHub Icon"></a>
 			
 			
-				<a href="https://linkedin.com/in/elian-r" target="_blank"><img src="assets/images/icon/linkedin.svg" class="social-icon"></a>
+				<a href="https://linkedin.com/in/elian-r" target="_blank"><img src="assets/images/icon/linkedin.svg" class="social-icon" alt="LinkedIn Icon"></a>
 			
-			<a href="about"><img src="assets/images/icon/me.svg" class="social-icon"></a>
+			<a href="about"><img src="assets/images/icon/me.svg" class="social-icon" alt="About Me Icon"></a>
 			<br>
 			A blog by Elian Rieza // nail-e <br> High School Hobbyist <br> Least unhinged Linux enjoyer
 			<br>
@@ -68,16 +71,16 @@
 	<h1>RFID Hacking with an MFRC522 and an ESP-8266</h1>
 	<h5 id="reading-time-8-minutes">Reading Time: 8 minutes</h5>
 
-<p>My high school recently installed (and uninstalled) a new RFID security system for all the doors of classrooms and the auxiliary doors of the school buildings and cafeteria. While not only being really inconvenient as I have to wait until 7:45 in the morning for security to disable the auxiliary doors so I can go in, only teachers can come in or out of the buildings if the doors are fully locked because you’d need a teacher’s ID card on the RFID reader to open the doors. Us students have ID cards but it’s only used for identification rather than unlocking doors and what not so I got an idea: what if I <strong>legally</strong> found a way to open a school door without waiting for a teacher to let me in.</p>
+<p>My high school recently installed a new RFID security system for all the doors of classrooms and the auxiliary doors of the school buildings and the cafeteria. While not only being extremely inconvenient as we have to wait until 7:45 in the morning for security to disable the auxiliary doors magentic locks so we can freely leave the school, leaving the building is a hassle because the doors are locked both ways, effectively locking us students inside. Students have ID cards but it’s only used for identification rather than unlocking doors and what not so I got an idea: what if I <strong>legally</strong> found a way to open a school door without waiting for a teacher to let me in or out.</p>
 
 <p><img src="/assets/images/rfid-post/rc522.webp" alt="A photo of an MFRC522 RFID Module for ESP8266" title="MFRC522" style="width:500px; height:300px; margin-left:20px; float: right;" />
 <img src="/assets/images/rfid-post/esp8266.webp" alt="A photo of an ESP8266 NodeMCU V3.0 Lolin " title="ESP8266" style="width:500px; height:300px; margin-left:20px; float: right;" /></p>
 
-<p>Unfortunately for me, the week that school admin setup the security system, they removed the whole system as it was becoming a hassle for faculty and students alike but my idea still persisted. I got to work and decided to practice <strong>legally</strong> cloning my apartment access card which also <strong>accidentally</strong> happened to lead me to <strong>legally</strong> clone a teacher’s ID card.</p>
+<p>(Un)fortunately for me, the week that school admin setup the security system, they removed the whole system as it was becoming a hassle for faculty and students alike but my idea still persisted. I got to work and decided to practice <strong>legally</strong> cloning my apartment access card which also <strong>accidentally</strong> happened to lead me to <strong>legally</strong> clone a teacher’s ID card.</p>
 
-<p>Anyways, to do that, I ordered a MFRC522 module (the blue module on the right) from Amazon which is a 13.56MHz ISO/IEC 14443 MIFARE RFID Reading/Writing module with came bundled with a singular RFID card and RFID tag. Admittedly, the MFRC522 module I bought was quite cheap and I had a few doubts on its reliability but dodgy Chinese electronics products from Amazon work 95% of the time anyways so it really wasn’t a huge concern.</p>
+<p>Anyways, to do that, I ordered a MFRC522 module (the blue module on the right) from Amazon which is a 13.56MHz ISO/IEC 14443 MIFARE RFID Reading/Writing module with came bundled with a singular RFID card and RFID tag. Admittedly, the MFRC522 module I bought was quite cheap and I had a few doubts about its reliability but dodgy Chinese electronics products from Amazon work 95% of the time anyways so it really wasn’t a huge concern.</p>
 
-<p>I was split on either using an Arduino Uno or ESP8266 (the black module on the right) but decided on using an ESP-8266 in the end. The ESP-8266 is one of the best microchips out there and, in my opinion, outshine its superior ESP-32, Arduino Nano and maybe even the Raspberry Pi Pico. It’s cheap, its powerful and definitely the best pocket-sized option out there.</p>
+<p>I was split on either using an Arduino Uno or ESP8266 (the black module on the right) but decided on using an ESP-8266 in the end. The ESP-8266 is one of the best microchips out there and, in my opinion, outshines its succesor, the ESP-32, the Arduino Nano and maybe even the Raspberry Pi Pico. It’s cheap, its powerful and definitely the best pocket-sized option out there.</p>
 
 <p>I had a three-pack of really low-end NodeMCU ESP8266 v3.0 from Lolin which I bought for another project and had one leftover which I used. I highly recommend you to use something slightly on the higher end on the ESP8266 such as HiLetGo but the Lolin ones work perfectly.</p>
 
@@ -306,6 +309,9 @@
 </div>
 
 
+	<div class="footer">
+    <p><span>The Silence of the RAMs - Elian Rieza, 2023. Thanks for visiting!</span></p>
+	</div>
 </div>
 	<script src="assets/js/ephesus.js"></script>
 	<script type="text/javascript">
@@ -327,3 +333,4 @@
 	
 </body>
 </html>
+

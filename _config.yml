@@ -3,7 +3,7 @@ site: The Silence of the RAMs
 title: The Silence of the RAMs
 keywords: nail-e, blog, Elian Inigo Rieza,
 description: >-
-  A blog by Elian Rieza 
+  "The Silence of the RAMs: Elian Rieza's blog about coding, electronics, Linux, technology and everything in between."
 lang: en-US
 timezone:  Asia/Dubai
 repo: # site repo [optional]
@@ -14,13 +14,13 @@ google_analytics:   UA-XXXXXXXX-00 # Put your Google Analytics code
 # Author settings
 author: 
   name: The Silence of the RAMs
-  bio: A blog by Elian Rieza // nail-e <br> High School Hobbyist <br> Least unhinged Linux enjoyer 
+  bio: "A blog by Elian Rieza // nail-e <br> High School Hobbyist <br> Least unhinged Linux enjoyer"
   picture: assets/images/ElianRieza.webp 
   github: nail-e # github username
   twitter: # twitter username
   facebook: # facebook username
   instagram: # instagram username
-  youtube: # youtube username
+  youtube: nail-e
   linkedin: elian-r # linkedin username
   email: e.i_ri3za@tuta.io # email adress
 

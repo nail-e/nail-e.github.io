@@ -1,28 +1,42 @@
-I"�k<p>My high school recently installed (and uninstalled) a new RFID security system for all the doors of classrooms and the auxiliary doors of the school buildings and cafeteria. While not only being really inconvenient as I have to wait until 7:45 in the morning for security to disable the auxiliary doors so I can go in, only teachers can come in or out of the buildings if the doors are fully locked because you’d need a teacher’s ID card on the RFID reader to open the doors. Us students have ID cards but it’s only used for identification rather than unlocking doors and what not so I got an idea: what if I <strong>legally</strong> found a way to open a school door without waiting for a teacher to let me in.</p>
+I"�q<h5 id="reading-time-8-minutes">Reading Time: 8 minutes</h5>
 
-<p>Unfortunately for me, the week that school admin setup the security system, they removed the whole system as it was becoming a hassle for faculty and students alike but my idea still persisted. I got to work and decided to practice <strong>legally</strong> cloning my apartment access card which also <strong>accidentally</strong> happened to lead me to <strong>legally</strong> clone a teacher’s ID card.</p>
+<p>My high school recently installed a new RFID security system for all the doors of classrooms and the auxiliary doors of the school buildings and the cafeteria. While not only being extremely inconvenient as we have to wait until 7:45 in the morning for security to disable the auxiliary doors magentic locks so we can freely leave the school, leaving the building is a hassle because the doors are locked both ways, effectively locking us students inside. Students have ID cards but it’s only used for identification rather than unlocking doors and what not so I got an idea: what if I <strong>legally</strong> found a way to open a school door without waiting for a teacher to let me in or out.</p>
 
-<p>Anyways, to do that, I ordered a MFRC522 module from Amazon which is a 13.56MHz ISO/IEC 14443 MIFARE RFID Reading/Writing module with came bundled with a singular RFID card and RFID tag. Admittedly, the MFRC522 module I bought was quite cheap and I had a few doubts on its reliability but dodgy Chinese electronics products from Amazon work 95% of the time anyways so it really wasn’t a huge concern.</p>
+<p><img src="/assets/images/rfid-post/rc522.webp" alt="A photo of an MFRC522 RFID Module for ESP8266" title="MFRC522" style="width:500px; height:300px; margin-left:20px; float: right;" />
+<img src="/assets/images/rfid-post/esp8266.webp" alt="A photo of an ESP8266 NodeMCU V3.0 Lolin " title="ESP8266" style="width:500px; height:300px; margin-left:20px; float: right;" /></p>
 
-<p><img src="/assets/images/rfid-post/rc522.webp" alt="A photo of an MFRC522 RFID Module for ESP8266" title="MFRC522" style="width:500px; height:300px; margin-left:20px; float: right;" /></p>
+<p>(Un)fortunately for me, the week that school admin setup the security system, they removed the whole system as it was becoming a hassle for faculty and students alike but my idea still persisted. I got to work and decided to practice <strong>legally</strong> cloning my apartment access card which also <strong>accidentally</strong> happened to lead me to <strong>legally</strong> clone a teacher’s ID card.</p>
 
-<p>I was split on either using an Arduino Uno or ESP8266 but decided on using an ESP-8266 in the end. The ESP-8266 is one of the best microchips out there and, in my opinion, outshine its superior ESP-32, Arduino Nano and maybe even the Raspberry Pi Pico. It’s cheap, its powerful and definitely the best pocket-sized option out there.</p>
+<p>Anyways, to do that, I ordered a MFRC522 module (the blue module on the right) from Amazon which is a 13.56MHz ISO/IEC 14443 MIFARE RFID Reading/Writing module with came bundled with a singular RFID card and RFID tag. Admittedly, the MFRC522 module I bought was quite cheap and I had a few doubts about its reliability but dodgy Chinese electronics products from Amazon work 95% of the time anyways so it really wasn’t a huge concern.</p>
+
+<p>I was split on either using an Arduino Uno or ESP8266 (the black module on the right) but decided on using an ESP-8266 in the end. The ESP-8266 is one of the best microchips out there and, in my opinion, outshines its succesor, the ESP-32, the Arduino Nano and maybe even the Raspberry Pi Pico. It’s cheap, its powerful and definitely the best pocket-sized option out there.</p>
 
 <p>I had a three-pack of really low-end NodeMCU ESP8266 v3.0 from Lolin which I bought for another project and had one leftover which I used. I highly recommend you to use something slightly on the higher end on the ESP8266 such as HiLetGo but the Lolin ones work perfectly.</p>
 
-<p><img src="/assets/images/rfid-post/esp8266.webp" alt="ESP8266" /></p>
-
 <h2 id="looking-for-the-best-electronic-modules">Looking for the best electronic modules</h2>
 <p>Going on a tangent here but spending a few bucks could save you from a headache fixing a DOA electronic or trying to download weird drivers that are so niche that you’d need to go on page 13 of Google trying to find it. Either way, the best way to do things is to buy a slightly-more-expensive-than-the-cheapest-option on Amazon or eBay. Make sure to read the reviews too: a straight 5-star electronic with AI-generated reviews is more likely to be worse and way less trustworthy than a 3.9-star review with genuine human text with complaints, praises and photos.</p>
+
+<p>Just a quick heads-up, the first thing you’ll see in serial once you run the program on a low-end ESP8266 or a v2.x ESP8266 is:</p>
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">";</span>ll��|�d�|�d�#&lt;����r�c�c��go�lo<span class="s1">'���cx��d{l;dx�g�"
+</span></code></pre></div></div>
+<p>(May not show up in some browsers but it’s supposed to show missing characters!)</p>
+
+<p>You should</p>
+<ol>
+  <li>Type enter on the terminal</li>
+  <li>Scan your card</li>
+  <li>Check that your baud rate is correct (115200 baud)</li>
+</ol>
+
 <h2 id="soldering-the-mfrc522">Soldering the MFRC522</h2>
 <p>The MFRC522 I bought was unsoldered and I didn’t have a solder handy so I borrowed a friend’s cheap solder. This was the 5% of the time where electronics from China don’t work well and i’d spend slightly a bit more just to get a slightly more expensive but high-quality solder. I’m not the best solder so here’s a video of someone soldering their MFRC522.</p>
 
-<p>[https://www.youtube.com/watch?v=wv5Mp1mn_8M]</p>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/wv5Mp1mn_8M?si=HFs8RFdm40if9R_b" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
 
 <h2 id="wiring-and-code">Wiring and Code</h2>
 <p>Wiring the RC522 with the ESP8266 was dodgy and took me around 3 days to get right. One big issue was the Lolin ESP8266 apparently only being able to run on <code class="language-plaintext highlighter-rouge">9600 baud</code> while the RC522 runs exclusively on <code class="language-plaintext highlighter-rouge">115200 baud</code>. I’m certain that the Lolin ESP8266 just have a printing error because it works on both <code class="language-plaintext highlighter-rouge">115200</code> and <code class="language-plaintext highlighter-rouge">9600 baud</code> outputs. Just note that the console needs to run on <code class="language-plaintext highlighter-rouge">115200 baud</code> to see any outputs.</p>
 
-<p>[PHOTO OF THE WIRING]</p>
+<p><img src="/assets/images/rfid-post/ESP8266-Hookup.webp" alt="ESP8266 and RC522 Pinout" /></p>
 
 <p>Wiring the RC522 is straightforward. The code below (and on my GitHub) follows the wiring above. A higher resolution image can be seen in the GitHub page of this project. But before we can run, we need to walk and before we can clone cards, we need to read cards.</p>
 
@@ -188,19 +202,20 @@
 
 <p>But all in all, reading, cloning and writing the card worked! I made this small video showcasing how it all worked.</p>
 
-<p>[VIDEO OF RFID CARD]</p>
+<p>[VIDEO OF RFID CARD COMING SOON]</p>
+
 <h2 id="future-stuff">Future Stuff</h2>
 <p>One big thing I really want to add is the ability to write the card UID into the ESP8266 to be read from by a phone connected to the ESP8266 through its wifi capabilities. This makes the process of <strong>legally</strong> scanning cards way more intuitive and hacker-y.</p>
 
 <p>This was a really fun side project that spiraled into something more than being a harmful script kid attacking their school’s security system. I must stress that cloning cards that aren’t yours could possibly be illegal in other countries and I don’t condone anyone trying to break into buildings or clone ID cards unless the ID card is legally yours.</p>
 
-<p>[PHOTO OF FINAL CIRCUIT]</p>
+<p><img src="/assets/images/rfid-post/circuitfinal.webp" alt="ESP8266 and RC522" /></p>
 
 <p>Have fun :)</p>
 <h2 id="links">Links</h2>
 <ul>
-  <li><strong><a href="github.com/nail-e/rfid-project">GitHub Page</a></strong></li>
+  <li><strong><a href="https://github.com/nail-e/rfid-project">GitHub Page</a></strong></li>
   <li><strong><a href="https://github.com/miguelbalboa/rfid">Miguel Balboa’s RFID Library</a></strong></li>
-  <li><strong><a href="">A good MFRC522 on Amazon</a></strong></li>
+  <li><strong><a href="https://www.amazon.ae/SunFounder-Mifare-Reader-Arduino-Raspberry/dp/B07KGBJ9VG/ref=sr_1_2?crid=38WVTQ5VI3OWP&amp;keywords=rc522&amp;qid=1699719913&amp;sprefix=rc522%2Caps%2C201&amp;sr=8-2&amp;th=1">A good MFRC522 on Amazon AE</a></strong></li>
 </ul>
 :ET
