@@ -1,6 +1,6 @@
 ---
 title: "In search of Amongi using Rust and Chudnovsky's Algorithm"
-date: 2023-10-13T00:00:00+00:00
+date: 2023-09-13T00:00:00+00:00
 author: Elian Rieza
 layout: post
 permalink: /in-search-of-amongi-using-rust-and-chudnovskys-algorithm/
