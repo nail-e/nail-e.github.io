@@ -26,8 +26,8 @@ author:
 
 
 # URL settings
-#url: "nail-e.github.io" # Domain Name of host. [username].github.io for github pages
-#permalink: pretty
+url: "nail-e.com" # Domain Name of host. [username].github.io for github pages
+permalink: pretty
 
 markdown: kramdown
 kramdown:
