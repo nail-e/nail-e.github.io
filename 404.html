@@ -3,7 +3,23 @@ layout: default
 title: "404: Page not found"
 permalink: 404.html
 ---
-<div class="w-100">
+<style>
+    @font-face {
+      font-family: 'Hack';
+      src: url('path/to/hack-font.woff') format('woff'); /* Replace 'path/to/hack-font.woff' with the actual path or URL */
+      /* Add more src declarations for different font formats if needed */
+    }
+
+    body {
+      font-family: 'Hack', monospace;
+    }
+
+    /* Add any additional styling as needed */
+    .w-100 {
+      text-align: center;
+    }
+</style>
+<div class="w-100" style="text-align: center;">
   <pre>
 
   ____________/\\\________/\\\\\\\_______________/\\\____        
@@ -18,5 +34,5 @@ permalink: 404.html
 
   </pre>
 	<p>This page doesn't exist! Sorry about that.</p>
-  <a href="https://elianrieza.dev"><ul>Go back home.<\ul></a>
+  <a href="https://elianrieza.dev"><u>Go back home.</u></a>
 </div>
