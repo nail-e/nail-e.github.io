@@ -15,15 +15,15 @@ google_analytics:   UA-XXXXXXXX-00 # Put your Google Analytics code
 author: 
   name: The Silence of the RAMs
   bio: "A blog by Elian Rieza /// nail-e <br> Maker, Hacker, Coder <br> Least unhinged Linux enjoyer"
-  picture: assets/images/ElianRieza.webp 
+  picture: assets/images/ElianRieza.webp
+  email: e.i_ri3za@tuta.io # email adress
   github: nail-e # github username
-  twitter: # twitter username
-  facebook: # facebook username
-  instagram: # instagram username
   youtube: nail-e
   linkedin: elian-r # linkedin username
-  email: e.i_ri3za@tuta.io # email adress
-
+  mastodon: nail_e@mastodon.social
+  hackaday:
+  website: https://elianrieza.dev
+  
 
 # URL settings
 #url: "" # Domain Name of host. [username].github.io for github pages
