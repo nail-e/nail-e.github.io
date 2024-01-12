@@ -4,13 +4,12 @@
 		<a href="{{ site.url }}"><img src="{{site.author.picture}}" class="profile-image" alt="Elian Rieza"></a>
 		<div class="profile-about">
 			<h1 style="margin-bottom: 0; font-weight: 700;">{{site.author.name}}</h2>
-        <a href=""><img src="assets/images/icon/me.svg" class="social-icon" alt="URL Icon"></a>
-      {% if site.author.twitter %}
-				<a href="https://twitter.com/nail___e" target="_blank"><img src="assets/images/icon/twitter.svg" class="social-icon" alt="Twitter Icon"></a>
-			{% endif %}	
-			{% if site.author.github %}
+      {% if site.author.github %}
 				<a href="https://github.com/{{site.author.github}}" target="_blank"><img src="assets/images/icon/github.svg" class="social-icon" alt="Github"></a>
 			{% endif %}
+      {% if site.author.twitter %}
+				<a href="https://twitter.com/nail___e" target="_blank"><img src="assets/images/icon/twitter.svg" class="social-icon" alt="Twitter Icon"></a>
+			{% endif %}		
       {% if site.author.youtube %}
 				<a href="https://youtube.com/@{{site.author.youtube}}" target="_blank"><img src="assets/images/icon/youtube.svg" class="social-icon" alt="YouTube Icon"></a>
 			{% endif %}
