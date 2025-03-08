@@ -1,0 +1,112 @@
+/*!
+ * Gruvbox Theme for Code Highlighting
+ * Adapted from Agate by Taufik Nurrohman <https://github.com/tovic>
+ * ----------------------------------------------------
+ *
+ * Gruvbox Colors:
+ * #282828 - Background
+ * #ebdbb2 - Foreground (Text)
+ * #cc241d - Red
+ * #98971a - Green
+ * #d79921 - Yellow
+ * #458588 - Blue
+ * #b16286 - Purple
+ * #689d6a - Aqua
+ * #fabd2f - Orange
+ * #928374 - Grey (Comments)
+ * #fbf1c7 - Light Yellow
+ * #3c3836 - Darker Background
+ *
+ */
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #282828; /* Gruvbox Dark Background */
+  color: #ebdbb2; /* Foreground Text */
+}
+
+.hljs-name,
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-code,
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-tag {
+  color: #fabd2f; /* Orange */
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: #d79921; /* Yellow */
+}
+
+.hljs-string,
+.hljs-bullet {
+  color: #98971a; /* Green */
+}
+
+.hljs-type,
+.hljs-title,
+.hljs-section,
+.hljs-attribute,
+.hljs-quote,
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #fbf1c7; /* Light Yellow */
+}
+
+.hljs-number,
+.hljs-symbol,
+.hljs-bullet {
+  color: #cc241d; /* Red */
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal {
+  color: #fabd2f; /* Orange */
+}
+
+.hljs-comment,
+.hljs-deletion,
+.hljs-code {
+  color: #928374; /* Grey */
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #b16286; /* Purple */
+}
+
+.hljs-meta {
+  color: #689d6a; /* Aqua */
+}
+
+.hljs-deletion {
+  background-color: #cc241d; /* Red Background */
+  color: #282828; /* Dark Foreground */
+}
+
+.hljs-addition {
+  background-color: #98971a; /* Green Background */
+  color: #282828; /* Dark Foreground */
+}
+
+.hljs a {
+  color: inherit;
+}
+
+.hljs a:focus,
+.hljs a:hover {
+  color: inherit;
+  text-decoration: underline;
+}
+

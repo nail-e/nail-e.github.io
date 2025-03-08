@@ -1,33 +1,12 @@
-{% include header.html %}
-<div class="container">
-	<div class="profile">
-		<a href="{{ site.url }}"><img src="{{site.author.picture}}" class="profile-image" alt="Elian Rieza"></a>
-		<div class="profile-about">
-			<h1 style="margin-bottom: 0; font-weight: 700;">{{site.author.name}}</h2>
-      {% if site.author.github %}
-				<a href="https://github.com/{{site.author.github}}" target="_blank"><img src="assets/images/icon/github.svg" class="social-icon" alt="Github"></a>
-			{% endif %}
-      {% if site.author.twitter %}
-				<a href="https://twitter.com/nail___e" target="_blank"><img src="assets/images/icon/twitter.svg" class="social-icon" alt="Twitter Icon"></a>
-			{% endif %}		
-      {% if site.author.youtube %}
-				<a href="https://youtube.com/@{{site.author.youtube}}" target="_blank"><img src="assets/images/icon/youtube.svg" class="social-icon" alt="YouTube Icon"></a>
-			{% endif %}
-			{% if site.author.linkedin %}
-				<a href="https://linkedin.com/in/{{site.author.linkedin}}" target="_blank"><img src="assets/images/icon/linkedin.svg" class="social-icon" alt="LinkedIn Icon"></a>
-			{% endif %}	
-      {% if site.author.email %}
-				<a href="javascript:void(0);" onclick="var textarea=document.createElement('textarea');textarea.value='elian[at]elianrieza[dot]dev';document.body.appendChild(textarea);textarea.select();document.execCommand('copy');document.body.removeChild(textarea);alert('Email copied to clipboard: elian[at]elianrieza[dot]dev');"><img src="assets/images/icon/email.svg" class="social-icon" alt="Email Icon"></a>
-			{% endif %}
-        <a href="about"><img src="assets/images/icon/me.svg" class="social-icon" alt="About Me Icon"></a> 
-			<br>
-			{{ site.author.bio }}
-			<br>
-			<div id="mode-switcher" onclick="toggleNightMode();">
-				<span></span>
-			</div>
-		</div>
-	</div>
-	{{ content }}
-	</div>
-{% include footer.html %}
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+        {%- include head.html -%}
+    <body>
+    <main class="page-content" aria-label="Content">
+        <div class="wrapper">
+            {{ content }}
+        </div>
+    </main>
+        {%- include footer.html -%}
+    </body>
+</html>

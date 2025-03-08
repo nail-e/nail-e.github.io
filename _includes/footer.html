@@ -1,20 +1,22 @@
-	<script src="assets/js/ephesus.js"></script>
-	<script type="text/javascript">
-		if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-			document.documentElement.setAttribute('data-theme', 'dark');
-			document.getElementById('mode-switcher').classList.add('active');
-		}
-	</script>
-
-	{% if site.google_analytics %}
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{site.google_analytics}}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', '{{site.google_analytics}}');
-    </script>
-	{% endif %}
-</body>
-</html>
+<footer class="site-footer h-card">
+    <data class="u-url" href="{{ "/" | relative_url }}"></data>
+    <div class="wrapper">
+      <div class="footer-col-wrapper">
+        <div class="footer-col">
+          <ul class="contact-list">
+            <li class="p-name">
+              {%- if site.author -%}
+                <a class="black-link" href="{{ site.url }}/about">
+                  About Me 
+                </a>
+              {%- endif -%}
+              </li>
+              {%- if site.email -%}
+              <li>
+              <a class="u-email black-link" href="mailto:{{ site.email }}">elian [@] elianrieza [dot] dev</a></li>
+              {%- endif -%}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>

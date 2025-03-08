@@ -1,83 +1,51 @@
-# Site settings
-site: The Silence of the RAMs
-title: The Silence of the RAMs - A blog by Elian Rieza
-keywords: nail-e, blog, Elian Inigo Rieza,
-description: >-
-  The Silence of the RAMs: Elian Rieza's blog about coding, electronics, Linux, technology and everything in between.
-lang: en-US
-timezone:  Asia/Dubai
-repo: # site repo [optional]
-google_verify:      google-site-verification=dhJPd915JAzy4V-4LOY4BfSEe-Ojus9MdkNeayQDmmI # Put your Google Verification here
-google_analytics:   UA-XXXXXXXX-00 # Put your Google Analytics code
-#discus-identifier:  XXX
+title: elianrieza.dev # The title of the blog
+author: Elian (Eli) Iñigo Rieza # Your name
+email: elian@elianrieza.dev # your email shown in the footer
+url: https://elianrieza.dev # this is your site's root address.
+description: > 
+  A blog by Elian Rieza. 
+favicon: "./favicon.ico" # set the favicon of the site
+show_excerpts: false # set to true to show excerpts on the homepage
 
-# Author settings
-author: 
-  name: The Silence of the RAMs
-  bio: "A blog by Elian Rieza <br> RCAC Assistant Researcher <br> Least unhinged Linux enjoyer"
-  picture: assets/images/ElianRieza.webp
-  email: e.i_ri3za@tuta.io # email adress
-  github: nail-e # github username
-  youtube: nail-e
-  linkedin: elian-r # linkedin username
-  twitter: nail-e
-  hackaday:
-  website: https://elianrieza.dev
-  
+# Moving date format
+# refer to https://shopify.github.io/liquid/filters/date/ if you want to customize this
+moving:
+  avatar_url: "./ElianRieza.webp" # avatar in about page
+  about_you: >
+    "Assistant Computational Researcher and Computer Engineer"
+  date_format: "%b %d" # date format of posts in home page
+  back_to: "Home" # In the post page, you have a back button above the title, you can custom the text by yourself.
 
-# URL settings
-#url: "" # Domain Name of host. [username].github.io for github pages
-#  permalink: pretty
+  # generate social links in about page.
+  social_links:
+    # twitter:
+    github: nail-e
+    rss: RSS
+    # dribbble:
+    #facebook: huangyz0918
+    # flickr:
+    # instagram:
+    linkedin: elian-r
+    # pinterest:
+    # youtube:
+    # youtube_channel:
+    # youtube_channel_name:
+    # telegram:
+    # googleplus:
+    # microdotblog:
+    # reddit:
 
-markdown: kramdown
-kramdown:
-  input: GFM
-  syntax_highlighter: rouge
+    # Mastodon instances
+    # mastodon:
+    # - username:
+    #   instance:
+    # - username:
+    #   instance:
 
-
-exclude:
-  - .jekyll-cache
-  - .obsidian
-  - Gemfile
-  - Gemfile.lock
-  - LICENSE.md
-  - README.md
-  - CONTRIBUTING.md
+# Build settings
+theme: moving # note, please use huangyz0918/moving if you want to publish to Github Pages.
+remote_theme: huangyz0918/moving
 
 plugins:
-  - jekyll-paginate
-  - jekyll-sitemap
-  - jekyll-relative-links
-paginate: 20
-paginate_path: "/page/:num"
-
-collections:
-  pages:
-    output: true
-    permalink: /:name
-  posts:
-    output: true
-    permalink: /:slug
-  
-defaults:
-  -
-    scope:
-      path: ""
-    values:
-      layout: "default"
-  -
-    scope:
-      path: ""
-      type: "pages"
-    values:
-      layout: "page"
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: "post"
-
-relative_links:
-  enabled:     true
-  collections: false
+  - jekyll-feed
+  - jekyll-seo-tag

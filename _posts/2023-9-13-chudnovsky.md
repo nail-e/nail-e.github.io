@@ -1,12 +1,8 @@
 ---
 title: "In search of Amongi using Rust and Chudnovsky's Algorithm"
-date: 2023-09-13T00:00:00+00:00
-author: Elian Rieza
 layout: post
-permalink: /in-search-of-amongi-using-rust-and-chudnovskys-algorithm/
-categories: Software
-tags: [software, math, coding, rust]
-mathjax: true
+permalink: /posts/in-search-of-amongi-using-rust-and-chudnovskys-algorithm/
+categories: Programming
 ---
 ##### Reading Time: 4 minutes
 
@@ -36,7 +32,7 @@ I've recently become enticed with Rust and its intricacies, almost unhealthily a
 
 Again, I'm no mathematician, so translating mathematical equations into code was a bit daunting. However, Rust's made the process more manageable. In crafting this implementation, I began by initializing variables to accommodate the dynamic nature of Chudnovsky's algorithm. Using `Float` type from `rug` - a library for large numbers operations - helps with precise calculations for longer numbers. 
 
-{% highlight rust %}
+```rust
 // From lib.rs. File available on GitHub
 
 #![warn(clippy::all, clippy::pedantic, missing_docs)]
@@ -90,11 +86,11 @@ pub fn pi(prec: u32, its: u32) -> Float {
     // Pi
     Float::with_val(prec, &c) * &s
 }
-{% endhighlight %}
+```
 
 Chudnovsky's algorithm constantly interates, each progressively searching the approximation of pi and two fundamental things that Rust achieved was accuracy and speed. Rust's `Float` ensures that every operation maintains point-bit precision up to 64 bits.
 
-{% highlight rust %}
+```c
 // From main.rs. File available on GitHub
 
 mod lib;
@@ -155,8 +151,7 @@ fn main() {
         _ => panic!("Redundant argument."),
     }
 }
-
-{% endhighlight %}
+```
 
 To enhance utility, this thing runs on CLI using `env`, allowing to specify the desired precision and number of iterations as straightforward command line arguments. Moreover, basic error handling exists, ensuring that a user can't shoot themselves in the foot.
 

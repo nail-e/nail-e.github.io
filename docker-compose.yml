@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    volumes:
+      - ".:/app"  # Mounts your local project folder into the container
+      - "/app/_site"  # Ensures that Jekyll doesn't regenerate the entire site on every change
+    ports:
+      - "4000:4000"  # Jekyll development server
+      - "35729:35729" # LiveReload port for automatic browser reloading
+    environment:
+      - JEKYLL_ENV=development
+    command: ["bundle", "exec", "jekyll", "serve", "--host=0.0.0.0", "--livereload", "--force_polling"]
+    networks:
+      - jekyll
+
+networks:
+  jekyll:
+    driver: bridge
