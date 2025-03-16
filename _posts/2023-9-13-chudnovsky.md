@@ -4,7 +4,6 @@ layout: post
 permalink: /posts/in-search-of-amongi-using-rust-and-chudnovskys-algorithm/
 categories: Programming
 ---
-##### Reading Time: 4 minutes
 
 Pi has always been 3.14159 to me and to everyone else really, it's only nerds who'd want to know pi up to its 100th or 1000th digit while its your supernerds who'd be searching for pi up to the millionth digit and well, I'm a supernerd (when I want to).
 

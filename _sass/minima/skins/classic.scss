@@ -1,5 +1,11 @@
 @charset "utf-8";
 
+.home-heading,
+.home-sub-heading {
+  font-family: 'Hack Nerd Font', monospace;
+}
+
+
 $color-scheme-auto: true;
 $color-scheme-dark: false;
 @import "minima/skins/auto";

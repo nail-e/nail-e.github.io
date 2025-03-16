@@ -7,3 +7,5 @@
 #
 layout: home
 ---
+
+Hi, I'm Elian Rieza and welcome to my website elianrieza.dev. Enjoy my blog posts and my personal ramblings.
