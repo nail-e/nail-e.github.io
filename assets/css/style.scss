@@ -2,6 +2,34 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
+.post-title {
+  font-family: 'Fira Code Nerd Font', monospace;
+  text-align: left;
+}
+
+/* Ensure the date posted is left aligned and uses a Nerd Font */
+.dt-published {
+  text-align: left;
+  font-family: 'Fira Code Nerd Font', monospace;
+}
+
+/* Similarly, style the reading time element */
+.reading-time {
+  font-family: 'Fira Code Nerd Font', monospace;
+}
+
+/* Optionally, adjust the bullet-divider spacing */
+.bullet-divider {
+  margin: 0 0.5em;
+}
+
+/* If needed, style the meta labels */
+.post-meta .meta-label {
+  font-weight: bold;
+  margin-right: 0.25em;
+}
+
+
 @import
   "minima/skins/{{ site.minima.skin | default: 'classic' }}",
   "minima/initialize";

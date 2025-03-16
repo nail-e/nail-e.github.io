@@ -12,6 +12,12 @@ layout: base
       <time class="dt-published" datetime="{{ pdate }}" itemprop="datePublished">
         {{ pdate | date: date_format }}
       </time>
+      {%- if page.reading_time %}
+        <span class="bullet-divider">•</span>
+        <span class="reading-time">
+          <i class="nerd-icon nerd-clock"></i> {{ page.reading_time }} min read
+        </span>
+      {%- endif %}
       {%- if page.modified_date -%}
         <span class="bullet-divider">•</span>
         <span class="meta-label">Updated:</span>
@@ -24,7 +30,8 @@ layout: base
       <div class="{% unless page.modified_date %}force-inline {% endunless %}post-authors">
         {%- for author in page.author %}
           <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-            <span class="p-author h-card" itemprop="name">{{ author }}</span></span>
+            <span class="p-author h-card" itemprop="name">{{ author }}</span>
+          </span>
           {%- if forloop.last == false %}, {% endif -%}
         {% endfor %}
       </div>
