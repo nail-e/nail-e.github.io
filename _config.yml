@@ -1,4 +1,4 @@
-title: Elian Rieza
+title: Elian @ elianrieza.dev
 author:
   name: Elian (Eli) Rieza
   email: elianrieza [at] ieee.org
@@ -30,9 +30,7 @@ minima:
   # the `path` property (as represented via Liquid) of the pages in the order they should
   # be rendered.
   nav_pages:
-    - posts.md
     - about.md
-    - elian-resume.md
 
   # Set to `true` to show excerpts on the homepage.
   #show_excerpts: false
