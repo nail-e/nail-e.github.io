@@ -1,4 +1,4 @@
-title: elianrieza.dev
+title: Elian Rieza
 author:
   name: Elian (Eli) Rieza
   email: elianrieza [at] ieee.org
@@ -31,8 +31,8 @@ minima:
   # be rendered.
   nav_pages:
     - posts.md
-    - listening.md
     - about.md
+    - elian-resume.md
 
   # Set to `true` to show excerpts on the homepage.
   #show_excerpts: false
@@ -57,5 +57,5 @@ minima:
       icon: linkedin
       url: "https://linkedin.com/elian-r"
     - title: elianrieza.dev RSS
-      icon: "fa-solid fa-rss"
+      icon: rss
       url: "http://elianrieza.dev/feed.xml"

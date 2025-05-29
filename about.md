@@ -4,18 +4,13 @@ title: About
 permalink: /about/
 ---
 
-Hi, I'm Elian Rieza, or Eli. I'm an undergrad studying Computer Engineering at Purdue while working as a research assistant at Purdue's Rosen Center of Advanced Computing. I use Arch btw.
+Hi, I'm Elian Rieza, or Eli. I'm an undergrad studying Computer Engineering at Purdue while working as a research assistant at Purdue's Rosen Center of Advanced Computing.
 
 My current research work at Purdue RCAC involves optimizing high-performance computers and researching emerging computational methods that drive efficiency. I regularly participate in open-source projects, mixing academic insights with practical applications. Beyond research, I enjoy experimenting with new programming paradigms, contributing to collaborative projects, and staying informed on the latest tech trends and innovations.
 
 My technical skills span software development, system optimization, and hardware integration. I am proficient in Python, JavaScript, and C++, and I have hands-on experience with high-powered computers web frameworks, digital media editing on Photoshop, After Effects and Kdenlive, Linux system administration, and PCB design. 
 
-### Milestones
-- **Oct' 2024** - Started Research Assistant Position @ Purdue RCAC
-- **Aug' 2024** - Started Computer Engineering @ Purdue University ECE
-- **May' 2024** - Completed IB with a 39
-
-### Stuff I'm Proud of
+### Personal Projects
 - **ossHack Hackathon 2024:**  
   Awarded bounties for projects on GitHub using JavaScript, HTML, and TypeScript.
 - **MIT Battlecode 2023:**  
