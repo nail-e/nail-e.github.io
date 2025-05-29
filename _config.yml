@@ -1,7 +1,7 @@
 title: elianrieza.dev
 author:
   name: Elian (Eli) Rieza
-  email: elian [at] elianrieza.dev
+  email: elianrieza [at] ieee.org
 
 # The `>` after `description:` means to ignore line-breaks until next key.
 # If you want to omit the line-break after the end of text, use `>-` instead.
@@ -59,4 +59,3 @@ minima:
     - title: elianrieza.dev RSS
       icon: "fa-solid fa-rss"
       url: "http://elianrieza.dev/feed.xml"
-
