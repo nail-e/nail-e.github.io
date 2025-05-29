@@ -8,10 +8,10 @@
 layout: home
 ---
 
-<ol type='1'>
+<ul>
   {% for post in site.posts %}
-    <li>
+    <ol type="1">
       <a href="{{ post.url }}">{{ post.title }}</a> – <small>{{ post.date | date: "%B %-d, %Y" }}</small>
-    </li>
+    </ol>
   {% endfor %}
-</ol>
+</ul>
