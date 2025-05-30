@@ -1,5 +1,5 @@
 ---
-title: "Converting resistor networks to a breadboard and non-breadboard model to find the best modelling option for circuit integrity and thermal managment"
+title: "Converting resistor networks to a breadboard and non-breadboard model"
 layout: post
 permalink: /posts/converting-resistor-networks-to-a-breadboard-and-non-breadboard-model-to-find-the-best-modelling-option-for-circuit-integrity-and-thermal-managment
 categories: Research
