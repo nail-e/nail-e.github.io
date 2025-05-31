@@ -1,4 +1,4 @@
-title: elianrieza.dev
+title: elianrieza.dev | A bored engineer's personal blog
 author:
   name: Elian (Eli) Rieza
   email: elianrieza [at] ieee.org
@@ -6,7 +6,7 @@ author:
 # The `>` after `description:` means to ignore line-breaks until next key.
 # If you want to omit the line-break after the end of text, use `>-` instead.
 description: >
-  Undergraduate Computer Engineer and Assistant Computational Researcher
+  Computer Engineer and Assistant Computational Researcher
 
 # Build settings
 
