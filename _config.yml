@@ -55,5 +55,5 @@ minima:
       icon: linkedin
       url: "https://linkedin.com/elian-r"
     - title: elianrieza.dev RSS
-      icon: linkedin
+      icon: rss
       url: "http://elianrieza.dev/feed.xml"
