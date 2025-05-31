@@ -11,24 +11,25 @@
             <li class="p-name">Site by {{ site.author.name | escape }}</li>
           {% endif -%}
           {% if site.author.email %}
-          <li>
-            <script type="text/javascript">
-              const chars = [
-                101, 108, 105, 97, 110, 114, 105, 101, 122, 97, // "elianrieza"
-                64,                                            // "@"
-                105, 101, 101, 101, 46, 111, 114, 103           // "ieee.org"
-              ];
-              const email = chars.map(c => String.fromCharCode(c)).join("");
-              const link = document.createElement("a");
-              link.className = "u-email";
-              link.href = "mailto:" + email;
-              link.textContent = email;
-              document.getElementById("email-slot").appendChild(link);
-            </script>
+            <li>
+              <span id="email-slot"></span>  <!-- Move this BEFORE the script -->
 
-            <span id="email-slot"></span>
-            <noscript><em>Email requires JavaScript to view.</em></noscript>
-          </li>
+              <script type="text/javascript">
+                const chars = [
+                  101, 108, 105, 97, 110, 114, 105, 101, 122, 97,
+                  64,                                            // "@"
+                  105, 101, 101, 101, 46, 111, 114, 103
+                ];
+                const email = chars.map(c => String.fromCharCode(c)).join("");
+                const link = document.createElement("a");
+                link.className = "u-email";
+                link.href = "mailto:" + email;
+                link.textContent = email;
+                document.getElementById("email-slot").appendChild(link);
+              </script>
+
+              <noscript><em>Email requires JavaScript to view.</em></noscript>
+            </li>
           {% endif %}
         </ul>
       {%- endif %}
