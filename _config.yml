@@ -54,6 +54,9 @@ minima:
     - title: Elian's LinkedIn
       icon: linkedin
       url: "https://linkedin.com/elian-r"
+    - title: Elian's ORCID
+      icon: orcid
+      url: "https://orcid.org/0009-0000-1519-0124"
     - title: elianrieza.dev RSS
       icon: rss
       url: "http://elianrieza.dev/feed.xml"
