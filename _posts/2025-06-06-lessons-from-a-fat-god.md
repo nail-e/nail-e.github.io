@@ -1,5 +1,5 @@
 ---
-title: "Lessons of the FAT God: A retrospective on the FAT file system"
+title: "Lessons of a FAT God: A retrospective on the FAT file system"
 layout: post
 permalink: /posts/lessons-from-a-FAT-god
 categories: 
