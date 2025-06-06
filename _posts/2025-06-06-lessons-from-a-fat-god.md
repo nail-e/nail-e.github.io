@@ -9,7 +9,8 @@ categories:
 It's almost been 24 years since the shift of exFAT to NTFS on Windows XP, the greatest Windows to some and the last bastion of native FAT-family support on any Windows systems. While exFAT still persists in USB flash drives, boot partitions and *some* legacy partitions, FAT is mostly gone in the Windows space, being surpassed by NTFS yet it survives.
 
 Everything from its (poor) attribute flags to data clustering has helped modern file systems heavily inspiring NTFS, hell, even Linux-favorites like ext4 and btrfs. The FAT family of file systems wasn't the widest-used file systems for two-and-a-half decades for a reason and its importance never falls short.
-### The FAT12 era
+
+## The FAT12 era
 FAT12 wasn't made just to store data, it was about making file systems portable and created a standard. It was a simple solution. Each file was stored as a chain of clusters, the FAT entry for each cluster pointed to the next cluster in the chain while a special value (usually `0xFFF`) marked the end of the file. This structure let FAT12 support files of varying length without preallocation, ushering the standard of "unallocated free space" for future file systems
 
 Capped at around 4,000 usable data clusters, FAT12 was the first commercially used FAT past the 8-bit FAT which as FAT12 was the go-to system for floppy disks. Using 12-bits, FAT12 managed up to 4,084 clusters (without overhead). This aligned perfectly with the capacities of floppy disks. It replaced the earlier 8-bit FAT systems and became the [standard format for 360KB, 720KB and 1.44MB floppies.](https://en.wikipedia.org/wiki/Floppy_disk)
@@ -17,7 +18,7 @@ Capped at around 4,000 usable data clusters, FAT12 was the first commercially us
 The layout of FAT12 was designed to fit within the physical constraints of floppy drives and the disk was organized using a boot sector, FAT #1 and FAT #2 copy sectors for redundancy, the root directory and the data area. But that meant FAT12 wasn't scalable. You couldn't grow a volume past 32MB and the limited number of clusters seriously [capped file organization](https://dankohn.info/projects/PromdiskIII/PCINTERN-chp21.pdf). No file organization, no subdirectories and only basic file attributes.
 
 Well, you could see the issue with the structure described. One bad sector and it would be good riddance to your entire disk. This meant that it would also be a goodbye to scalability and speed. To access data in a sector you'd need to to traverse the linearly-implemented cluster chain. It wasn't much but it laid the groundwork for everything to come.
-### The FAT16 era: Consoles and Cameras
+## The FAT16 era: Consoles and Cameras
 FAT16 on the other hand was a commitment to serious storage. It brought in a broader vision of support for the rapidly expanding demand of hard disks, and a more robust layout that could stretch across megabytes of data without collapsing under its sheer size. FAT16 became prevalent with the rise of hard disks as size was the name of the game.
 
 Similar to FAT12, FAT16 stored files as cluster chains with each entry in the table still pointing to the next cluster in the system at 16-bit values, allowing over 65,000 clusters per volume. Of course, it was still structurally similar but with more breathing room due to the larger file entry. 
@@ -26,8 +27,8 @@ FAT16 bought something revolutionary: it standardized how to format and organize
 
 FAT16 got too close to the Sun, however. Scalability and size were the issue with FAT16. Files were still chained cluster-by-cluster and reading was *still* linear. Reading a fragmented file meant going on a spiritual quest to find the next fragment of data. Hard disks using FAT16 were **painfully** inefficient. As file sizes grew and the number of files ballooned, FAT16 hit its ceiling. Larger cluster sizes or switching to **FAT16B** (confusingly 32-bit) skyrocketed internal fragmentation. A 1KB file could waste up 31KB.
 
-On top of that, the root directory's fixed sized bottlenecked the hard drive. Once you hit the limit on entries, you were done. You'd either start deleting files or rethink your directory layout. FAT16 couldn't dynamically grow its root directory. It couldn't support access control. It had no concept of journaling, long filenames or multiple user access but nevertheless made history. It ran the software of DOS, windows 3.x, early Linux distros, embedded systems of the early-to-mid '90s, powering the golden era of the personal computer. 
-### The FAT32 era: The last great FAT filesystem
+On top of that, the root directory's fixed sized bottlenecked the hard drive. Once you hit the limit on entries, you were done. You'd either start deleting files or rethink your directory layout. FAT16 couldn't dynamically grow its root directory. It couldn't support access control. It had no concept of journaling, long filenames or multiple user access but nevertheless made history. It ran the software of DOS, Windows 3.x, early Linux distros, embedded systems of the early-to-mid '90s, powering the golden era of the personal computer. 
+## The FAT32 era: The last great FAT filesystem
 The late 90s came with greater size and scalability requirements than before. FAT32 was necessary, and still is. It reworked the scalability of the FAT16 and FAT16B formats with its new cluster count at 4 million clusters per volume. 
 
 At its core, FAT32 maintained the chain-of-clusters architecture. Every file was a linked list of clusters with the FAT table guiding access, just like before. But used 32-bit entries much like FAT16B, though only 28 bits were actually used for addressing and reversing the rest for control flags. This had a massive impact as while FAT16B maxed out at 2GB per volume, FAT32 could scale up to 2TB with 512B sectors to a maximum of 16TB with 4KB sectors and 64KB clusters.  
@@ -42,7 +43,7 @@ Bootable on everything from PCs to digital cameras, MP3 players, game consoles, 
 The 4 GB file size limit began to hurt, think DVD images, HD videos, software packages. Workarounds like splitting files or switching to exFAT became common. The lack of robust security and no journaling made FAT32 vulnerable in large, active environments. And with SSDs and high-speed storage rising, the format’s non-aligned cluster architecture left performance on the table.
 
 FAT32 may have not been the most elegant, modern or secure, but it outlasted its successors in sheet adoption and holds the title, in my books, as *the last great FAT file system*.
-### The exFAT era
+## The exFAT era
 Where FAT32 has tried to stretch an aging file system in a rapidly developing environment, the Extended File Allocation Table (exFAT) let it set, finally lifting the weight of the FAT file system's limits. No more file caps and limited volumes, flash storage was the next thing to be supported with a system designed for floppy disks.
 
 exFAT was a sleeper hit: [introduced in 2006 for Windows CE](https://learn.microsoft.com/en-us/windows/win32/fileio/exfat-specification) but it wasn't the default format for SDXC cards and larger-size USB drives that it took off. The purpose was straightforwards: build a file system optimized for flash media.
