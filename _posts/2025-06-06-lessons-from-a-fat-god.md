@@ -6,7 +6,7 @@ categories:
     - Long Essay
     - Hardware
 ---
-It's almost been 24 years since the shift of exFAT to NTFS on Windows XP, the greatest Windows to some and the last bastion of native FAT-family support on any Windows systems. While exFAT still persists in USB flash drives, boot partitions and *some* legacy partitions, FAT is mostly gone in the Windows space, being surpassed by NTFS yet it survives.
+It's almost been 24 years since the shift of exFAT to NTFS on Windows XP, the last bastion of native FAT-family support on any Windows systems. While exFAT still persists in USB flash drives, boot partitions and *some* legacy partitions, FAT is mostly gone in the Windows space, being surpassed by NTFS and reFS yet it survives in many parts of computing systems to this day.
 
 Everything from its (poor) attribute flags to data clustering has helped modern file systems heavily inspiring NTFS, hell, even Linux-favorites like ext4 and btrfs. The FAT family of file systems wasn't the widest-used file systems for two-and-a-half decades for a reason and its importance never falls short.
 
