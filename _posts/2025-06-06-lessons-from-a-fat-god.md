@@ -2,7 +2,9 @@
 title: "Lessons of a FAT God: A retrospective on the FAT file system"
 layout: post
 permalink: /posts/lessons-from-a-FAT-god
-tag: Low Level
+categories: 
+    - Long Essay
+    - Hardware
 ---
 It's almost been 24 years since the shift of exFAT to NTFS on Windows XP, the last bastion of native FAT-family support on any Windows systems. While exFAT still persists in USB flash drives, boot partitions and *some* legacy partitions, FAT is mostly gone in the Windows space, being surpassed by NTFS and reFS yet it survives in many parts of computing systems to this day.
 
