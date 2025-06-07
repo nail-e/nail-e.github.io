@@ -11,6 +11,13 @@ layout: base
     });
   </script>
   <!-- MathJax Library -->
+  <span>[
+  {% for tag in page.tags %}
+    {% capture tag_name %}{{ tag }}{% endcapture %}
+    <a href="/tag/{{ tag_name }}"><code class="highligher-rouge"><nobr>{{     tag_name }}</nobr></code>&nbsp;</a>
+  {% endfor %}
+  ]</span>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
   <header class="post-header">
