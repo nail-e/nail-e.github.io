@@ -1,12 +1,12 @@
 ---
-title: "Lessons from a FAT God"
+title: "Lessons of a FAT God: A retrospective on the FAT file system"
 layout: post
 permalink: /posts/lessons-from-a-FAT-god
 categories: 
     - Long Essay
     - Hardware
 ---
-It's almost been 24 years since the shift of exFAT to NTFS on Windows XP, the greatest Windows to some and the last bastion of native FAT-family support on any Windows systems. While exFAT still persists in USB flash drives, boot partitions and *some* legacy partitions, FAT is mostly gone in the Windows space, being surpassed by NTFS yet it survives.
+It's almost been 24 years since the shift of exFAT to NTFS on Windows XP, the last bastion of native FAT-family support on any Windows systems. While exFAT still persists in USB flash drives, boot partitions and *some* legacy partitions, FAT is mostly gone in the Windows space, being surpassed by NTFS and reFS yet it survives in many parts of computing systems to this day.
 
 Everything from its (poor) attribute flags to data clustering has helped modern file systems heavily inspiring NTFS, hell, even Linux-favorites like ext4 and btrfs. The FAT family of file systems wasn't the widest-used file systems for two-and-a-half decades for a reason and its importance never falls short.
 
@@ -33,7 +33,7 @@ The late 90s came with greater size and scalability requirements than before. FA
 
 At its core, FAT32 maintained the chain-of-clusters architecture. Every file was a linked list of clusters with the FAT table guiding access, just like before. But used 32-bit entries much like FAT16B, though only 28 bits were actually used for addressing and reversing the rest for control flags. This had a massive impact as while FAT16B maxed out at 2GB per volume, FAT32 could scale up to 2TB with 512B sectors to a maximum of 16TB with 4KB sectors and 64KB clusters.  
 
-FAT32 still lacked the features of modern file systems, unless hacked with [DR-DOS](https://winworldpc.com/product/dr-dos/7x). But looking back, its disk layout was only slightly improved. The greatest difference was the root directory being no longer fixed in size, meaning it could now live anywhere in the data area, increasing a FAT32's system scalability. FAT32 also finally embraced [VFAT's Long File Names](http://justsolve.archiveteam.org/wiki/VFAT), allowing the handling of up to 255-charavter UCS-2 fiilenames, although under the hood, these were layered atop short filenames, using special directory entries.
+FAT32 still lacked the features of modern file systems, unless hacked with [DR-DOS](https://winworldpc.com/product/dr-dos/7x). But looking back, its disk layout was only slightly improved. The greatest difference was the root directory being no longer fixed in size, meaning it could now live anywhere in the data area, increasing a FAT32's system scalability. FAT32 also finally embraced [VFAT's Long File Names](http://justsolve.archiveteam.org/wiki/VFAT), allowing the handling of up to 255-character UCS-2 fiilenames, although under the hood, these were layered atop short file names, using special directory entries.
 
 However, in true Microsoft fashion, Windows NT bizarrely [capped FAT32](https://learn.microsoft.com/gl-es/previous-versions/windows/desktop/sidebar/system-shell-drive-driveformat) formatting to 32 GB volumes, even though the format could support terabytes. This artificial limitation was strategic. Microsoft wanted to nudge users toward NTFS, but FAT32 remained widely supported thanks to its lightweight implementation and universal compatibility.
 
