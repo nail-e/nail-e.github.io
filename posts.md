@@ -1,8 +1,8 @@
 ---
 layout: home
-title: Posts Archive
 permalink: /posts/
 ---
+# Posts Archive
 
 <ol>
   {% for post in site.posts %}
