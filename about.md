@@ -1,9 +1,8 @@
 ---
 layout: page
+title: About
 permalink: /about/
 ---
-
-# About
 
 Hi, I'm Elian Rieza, or Eli. I'm an undergrad studying Computer Engineering at Purdue while working as a research assistant at Purdue's Rosen Center of Advanced Computing.
 
