@@ -7,7 +7,7 @@
 #
 layout: home
 ---
-
+# Latest Posts
 <ol>
   {% for post in site.posts %}
     <li>
