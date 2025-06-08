@@ -2,7 +2,7 @@
 layout: home
 permalink: /posts/
 ---
-# Posts Archive
+# Posts
 
 <ol>
   {% for post in site.posts %}

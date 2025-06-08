@@ -1,6 +1,5 @@
 ---
 layout: home
-title: Links
 permalink: /links/
 ---
 
