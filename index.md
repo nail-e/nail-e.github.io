@@ -7,6 +7,7 @@
 #
 layout: home
 ---
+# Latest Posts
 <div class="home">
   {% assign posts = paginator.posts | default: site.posts %}
 
