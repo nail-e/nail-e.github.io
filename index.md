@@ -14,13 +14,7 @@ layout: home
 
   {{ content }}
 
-
-  {% if site.paginate %}
-    {% assign posts = paginator.posts %}
-  {% else %}
-    {% assign posts = site.posts %}
-  {% endif %}
-
+  {% assign posts = paginator.posts | default: site.posts %}
 
   {%- if posts.size > 0 -%}
     {%- if page.list_title -%}
