@@ -8,12 +8,6 @@
 layout: home
 ---
 <div class="home">
-  {%- if page.title -%}
-    <h1 class="page-heading">{{ page.title }}</h1>
-  {%- endif -%}
-
-  {{ content }}
-
   {% assign posts = paginator.posts | default: site.posts %}
 
   {%- if posts.size > 0 -%}
