@@ -4,6 +4,8 @@ title: About
 permalink: /about/
 ---
 
+# About
+
 Hi, I'm Elian Rieza, or Eli. I'm an undergrad studying Computer Engineering at Purdue while working as a research assistant at Purdue's Rosen Center of Advanced Computing.
 
 My current research work at Purdue RCAC involves optimizing high-performance computers and researching emerging computational methods that drive efficiency. I regularly participate in open-source projects, mixing academic insights with practical applications. Beyond research, I enjoy experimenting with new programming paradigms, contributing to collaborative projects, and staying informed on the latest tech trends and innovations.
