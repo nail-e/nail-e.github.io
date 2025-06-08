@@ -1,13 +1,13 @@
 ---
-layout: page
-title: Posts
+layout: home
+title: Posts Archive
 permalink: /posts/
 ---
 
-<ul>
+<ol>
   {% for post in site.posts %}
     <li>
       <a href="{{ post.url }}">{{ post.title }}</a> – <small>{{ post.date | date: "%B %-d, %Y" }}</small>
     </li>
   {% endfor %}
-</ul>
+</ol>
