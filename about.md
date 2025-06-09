@@ -13,10 +13,8 @@ My current research work at Purdue RCAC involves optimizing high-performance com
 My technical skills span software development, system optimization, and hardware integration. I am proficient in Python, JavaScript, and C++, and I have hands-on experience with high-powered computers web frameworks, digital media editing on Photoshop, After Effects and Kdenlive, Linux system administration, and PCB design. 
 
 ### Personal Projects
-- **ossHack Hackathon 2024:**  
-  Awarded bounties for projects on GitHub using JavaScript, HTML, and TypeScript.
-- **MIT Battlecode 2023:**  
-  Achieved 1st in MENA and 89th overall with a bot built in Java.
+- [**futa: Functionally Uselesss Terminal Assistant**](https://github.com/nail-e/futa)
+  A UNIX-based CLI assistant
 - **Open Source & Personal Projects:**  
   Regular blogging on [elianrieza.dev](https://elianrieza.dev).
   
