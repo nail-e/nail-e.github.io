@@ -14,7 +14,9 @@ My technical skills span software development, system optimization, and hardware
 
 ### Personal Projects
 - [**futa: Functionally Uselesss Terminal Assistant**](https://github.com/nail-e/futa)
+
   A UNIX-based CLI assistant
 - **Open Source & Personal Projects:**  
+  
   Regular blogging on [elianrieza.dev](https://elianrieza.dev).
   
