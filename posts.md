@@ -4,7 +4,6 @@ permalink: /posts/
 ---
 # **Posts**
 
-
 {% assign last_year = "" %}
 {% assign counter = 1 %}
 
@@ -14,7 +13,7 @@ permalink: /posts/
   {% if current_year != last_year %}
     {% assign last_year = current_year %}
     {% assign counter = 1 %}
-    ##{{ current_year }}
+    ### {{ current_year }} 
   {% endif %}
   
   <ol start="{{ counter }}">
