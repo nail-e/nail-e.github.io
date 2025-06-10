@@ -1,7 +1,7 @@
 ---
 title: "Lessons of a FAT God: A retrospective on the FAT file system"
 layout: post
-permalink: /posts/lessons-from-a-FAT-god
+permalink: /posts/lessons-of-a-FAT-god
 categories: 
     - Long Essay
     - Hardware
