@@ -6,6 +6,7 @@
 # See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 #
 layout: home
+paginate: 5
 ---
 # **Latest Posts**
 <div class="home">
