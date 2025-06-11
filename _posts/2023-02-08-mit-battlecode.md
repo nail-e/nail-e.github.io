@@ -1,5 +1,5 @@
 ---
-title: "MIT Batttlecode 2023: An unofficial Post Mortem by cattleboys (Ram Ranch Cowboys)"
+title: "MIT Batttlecode 2023: An unofficial Postmortem by cattleboys (Ram Ranch Cowboys)"
 layout: post
 permalink: /posts/mit-battlecode-2023-unofficial-postmortem/
 ---
