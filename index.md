@@ -6,11 +6,11 @@
 # See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 #
 layout: home
-paginate: 5
 ---
 # **Latest Posts**
 <div class="home">
-  {% assign posts = paginator.posts | default: site.posts %}
+  {% assign posts = site.posts | slice: 0, 5 %}
+
 
   {%- if posts.size > 0 -%}
     {%- if page.list_title -%}
@@ -60,3 +60,5 @@ paginate: 5
     {%- endif %}
   {%- endif -%}
 </div>
+
+**[View all](https://elianrieza.dev/posts)**
