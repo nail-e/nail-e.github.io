@@ -23,7 +23,7 @@ Hello World!
 ## Why would you make this?
 This stemmed as a joke from my friends after we first saw the carnage and absolute banality of [Calvin Liang's is-even-ai](https://github.com/Calvin-LL/is-even-ai) npm package. It's uselessness is unbound as an "is even" program can be made in approximately less than one line as seen below.
 
-```
+```c
 #include "stdio.h"
 #include "stdbool.h""
 
@@ -36,7 +36,7 @@ bool isEven(int num) {
 
 And, if you're a savant, you can do it in one line! 
 
-```
+```c
 #define isEven(x) !(x&1)
 ```
 
