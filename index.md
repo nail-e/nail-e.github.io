@@ -9,7 +9,7 @@ layout: home
 ---
 # **Latest Posts**
 <div class="home">
-  {% assign posts = site.posts | slice: 0, 5 %}
+  {% assign posts = site.posts | slice: 0, 6 %}
 
 
   {%- if posts.size > 0 -%}
@@ -61,4 +61,4 @@ layout: home
   {%- endif -%}
 </div>
 
-**[View all](https://elianrieza.dev/posts)**
+**[View all ({{ site.posts | size }}) posts](/posts)**
