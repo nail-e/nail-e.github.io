@@ -42,7 +42,7 @@ And, if you're a savant, you can do it in one line!
 
 It's amazing of what technology can do in the 21st century right?
 
-And that why I made a program that has no potential downside and is completely safe-to-use! `futa` takes hold of your terminal after you write a prompt and executes it with sudo permissions: imagine the endless possibilities you can do with `futa` on your computer! Imagine writing "touch newFile.txt" when you can ask `futa` 
+And that why I made a program that has no potential downside and is completely safe-to-use! `futa` takes hold of your terminal after you write a prompt and executes it with sudo permissions: imagine the endless possibilities you can do with `futa` on your computer! Imagine writing `touch newFile.txt` when you can ask `futa` 
 
 ```sh
 futa "Can you create a file in the current directory called newFile.txt?"
