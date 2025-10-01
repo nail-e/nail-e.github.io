@@ -17,4 +17,4 @@ permalink: /links/
 
 ### Friends of [elianrieza.dev](https://elianrieza.dev)
 - [unsaferust.net](https://unsaferust.net)
-- [nixium.dev](https://nixium.dev)
+- [shittybus.com](https://shittybus.com)
