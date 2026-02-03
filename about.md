@@ -14,9 +14,4 @@ My technical skills span software development, system optimization, and hardware
 
 ## **Personal Projects**
 - [**futa: Functionally Uselesss Terminal Assistant**](https://github.com/nail-e/futa)
-
-  A UNIX-based CLI assistant
-- **This Blog:**  
-  
-  Regular blogging on [elianrieza.dev](https://elianrieza.dev).
-  
+- [**GetNoisy: Automatic airplane noise monitoring for noise associations & individuals**](https://getnoisy.io)  
