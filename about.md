@@ -12,6 +12,9 @@ My current research work at Purdue RCAC involves optimizing high-performance com
 
 My technical skills span software development, system optimization, and hardware integration. I am proficient in Python, JavaScript, and C++, and I have hands-on experience with high-powered computers web frameworks, digital media editing on Photoshop, After Effects and Kdenlive, Linux system administration, and PCB design. 
 
+## **Papers**
+- [**Sound Sensor Networks and Sub/Urban Health: A Transdisciplinary Approach Using the Purdue Campuses as a Living Lab**](https://docs.lib.purdue.edu/cgi/viewcontent.cgi?article=1115&context=duri)
+
 ## **Personal Projects**
 - [**futa: Functionally Uselesss Terminal Assistant**](https://github.com/nail-e/futa)
 - [**GetNoisy: Automatic airplane noise monitoring for noise associations & individuals**](https://getnoisy.io)  
