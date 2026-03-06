@@ -8,7 +8,7 @@ permalink: /links/
 ### Public Bookmarks
 1. [**Every Noise at Once** by *Glen McDonald*](https://everynoise.com/)
 2. [**Cult in a Dead MMO** by *Nexpo*](https://www.youtube.com/watch?v=p9LWzr-_ibI)
-3. [**comfy.guide** by *Denshi*](https://comfy.guide/client/nvidia/)
+3. [**Arcadia Blank: Monitoring Monitory** by *Lodown Magazine*](https://lodownmagazine.com/features/arcadia-blank)
 4. [**The Dubai they DON'T advertise** by Calibrate the World](https://www.youtube.com/watch?v=yzJYiGFS9_Y)
 
 ### Favorite Reads
