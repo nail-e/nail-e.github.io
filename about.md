@@ -8,9 +8,11 @@ permalink: /about/
 
 Hi, I'm Elian Rieza, or Eli. I'm an undergrad studying Electrical Engineering at Purdue while working as a research assistant at Purdue's Rosen Center of Advanced Computing.
 
-My current research work at Purdue RCAC involves optimizing high-performance computers and researching emerging computational methods that drive efficiency. I regularly participate in open-source projects, mixing academic insights with practical applications. Beyond research, I enjoy experimenting with new programming paradigms, contributing to collaborative projects, and staying informed on the latest tech trends and innovations.
+My current work at Purdue RCAC involves optimizing high-performance computational workflows in a disributed environment and researching and determining issues within the clusters I work with that hamper productivity. I regularly participate in resarch conferences and you can catch me contributing or leading to ASIC design projects. Beyond research, I participate in on-chip and ASIC design and experimenting with my small-scale embedded projects.
 
-My technical skills span software development, system optimization, and hardware integration. I am proficient in Python, JavaScript, and C++, and I have hands-on experience with high-powered computers web frameworks, digital media editing on Photoshop, After Effects and Kdenlive, Linux system administration, and PCB design. 
+My technical skills span software development, system optimization, and hardware integration. I have hands-on experience with high-powered computers web frameworks, digital media editing, Linux system administration, and PCB design. On the side, I hone my home barista and bartending skills, find both *niche* and *new* music online, and frequently geek-out on all matters of public transportation.
+
+*Maari mo rin akong kontakin sa Tagalog!*
 
 ## **Papers**
 - **E. I. Rieza, M. R. Mccarty, M. Yuan, "Implementation of Benes Network for Non-Blocking Connections Between CPUs", System On-Chip Extension Technologies - Digital Circuits Design, 2026**
